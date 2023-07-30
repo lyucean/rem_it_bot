@@ -1,0 +1,22 @@
+{
+    "name": "lyucean/app",
+    "description": "PHP Start Pack",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lyucean\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lyucean",
+            "email": "lyucean@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "robmorgan/phinx": "^0.13.4",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
