@@ -17,7 +17,7 @@ final class Start extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change():
+    public function change()
     {
         $table = $this->table('test_table', ['id' => 'test_table_id']);
         $table->addColumn('test_column', 'string', ['limit' => 100])

@@ -43,9 +43,9 @@ while (true) {
         $stmt->bindParam(':column_value', $columnValue);
         $stmt->execute();
 
-        $logEntry =  "Данные успешно добавлены в таблицу.";
+        $logEntry =  "Данные успешно добавлены в таблицу." . PHP_EOL;
     } catch (PDOException $e) {
-        $logEntry =  "Ошибка: " . $e->getMessage();
+        $logEntry =  "Ошибка: " . $e->getMessage() . PHP_EOL;
     }
 
     // Добавляем запись в файл
