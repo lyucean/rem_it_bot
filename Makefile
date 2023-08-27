@@ -43,7 +43,7 @@ update: ## Пересобрать контейнер, обновить комп�
 update: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql migrate
 
 restart: ## Restart docker containers
-restart: docker-down docker-up
+restart: docker-down clean docker-up
 
 php-bash: ## Подключается к контейнеру PHP
 	docker-compose $(ENV) exec php-cli bash
