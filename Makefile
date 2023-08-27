@@ -22,13 +22,21 @@ delay: # Задержка, она требуется, чтоб MYSQL успел 
 
 wait-for-mysql: ## Задержка для MySQL, необходимая для инициализации, работает, только если mysql будет торчать наружу
 	@echo "$(PURPLE)Ожидание инициализации MySQL$(RESET)"
-	@seconds=0; \
+	seconds=0; \
 	while ! docker-compose $(ENV) exec php-cli nc -z mysql 3306; do \
 		seconds=$$((seconds+1)); \
 		sleep 1; \
 		echo "Прошло: $$seconds сек."; \
 	done
 .PHONY: wait-for-mysql
+
+log: ## Вывод логов
+ifeq ($(ENVIRONMENT), developer)
+	tail -f app/log/success_runner.log
+else
+	tail -f app/log/error_runner.log
+endif
+.PHONY: log
 
 # Если это developer окружение, то подключим debug профиль
 PROFILE =
@@ -37,13 +45,13 @@ ifeq ($(ENVIRONMENT),developer)
 endif
 
 init: ## Инициализация проекта
-init: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate
+init: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log
 
 update: ## Пересобрать контейнер, обновить композер и миграции
-update: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql migrate
+update: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
 
 restart: ## Restart docker containers
-restart: docker-down clean docker-up
+restart: docker-down clean docker-up log
 
 php-bash: ## Подключается к контейнеру PHP
 	docker-compose $(ENV) exec php-cli bash
