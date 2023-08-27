@@ -1,4 +1,3 @@
 <?php
 
-
-echo "Я выполнился " . date('Y-m-d H:i:s.u');
+require_once __DIR__ . '/vendor/autoload.php';
