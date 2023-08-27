@@ -37,10 +37,10 @@ ifeq ($(ENVIRONMENT),developer)
 endif
 
 init: ## Инициализация проекта
-init: docker-down docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate
+init: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate
 
 update: ## Пересобрать контейнер, обновить композер и миграции
-update: docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate
+update: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql migrate
 
 restart: ## Restart docker containers
 restart: docker-down docker-up
@@ -83,3 +83,6 @@ docker-down: ## Остановим контейнеры
 	@echo "$(PURPLE) Остановим контейнеры $(RESET)"
 	docker-compose $(ENV) $(PROFILE) down --remove-orphans
 
+clean:  ## Очистим папку логов
+	@echo "$(PURPLE) Очистим папку логов $(RESET)"
+	rm -f app/log/*.log
