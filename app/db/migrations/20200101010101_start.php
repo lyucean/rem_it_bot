@@ -19,9 +19,46 @@ final class Start extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('test_table', ['id' => 'test_table_id']);
-        $table->addColumn('test_column', 'string', ['limit' => 100])
-            ->addColumn('test_column_date_time', 'datetime')
-            ->create();
+        $table = $this->table('chat_history', ['id' => 'chat_history_id']);
+        $table->addColumn('chat_id', 'integer', ['null' => false])
+          ->addColumn('first_name', 'string', ['limit' => 100])
+          ->addColumn('last_name', 'string', ['limit' => 100])
+          ->addColumn('user_name', 'string', ['limit' => 100])
+          ->addColumn('text', 'string', ['limit' => 4096])
+          ->addColumn('date_added', 'datetime')
+          ->create();
+
+        $table = $this->table('command_waiting', ['id' => false, 'primary_key' => 'chat_id']);
+        $table->addColumn('chat_id', 'integer', ['null' => false])
+          ->addColumn('command', 'string', ['limit' => 100])
+          ->addColumn('date_added', 'datetime')
+          ->create();
+
+        $table = $this->table('message', ['id' => false, 'primary_key' => 'message_id']);
+        $table->addColumn('message_id', 'integer', ['null' => false])
+          ->addColumn('chat_id', 'integer', ['null' => false])
+          ->addColumn('text', 'string', ['limit' => 4096])
+          ->addColumn('image', 'string', ['limit' => 100])
+          ->addColumn('view', 'integer', ['default' => 0])
+          ->addColumn('display', 'integer', ['default' => 1])
+          ->addColumn('date_reminder', 'datetime')
+          ->addColumn('date_added', 'datetime')
+          ->create();
+
+        $table = $this->table('schedule', ['id' => false, 'primary_key' => 'chat_id']);
+        $table->addColumn('chat_id', 'integer', ['null' => false])
+          ->addColumn('hour_start', 'integer', ['default' => 9])
+          ->addColumn('hour_end', 'integer', ['default' => 14])
+          ->addColumn('time_zone_offset', 'integer', ['default' => 3])
+          ->addColumn('quantity', 'integer', ['default' => 1])
+          ->addColumn('date_modified', 'datetime')
+          ->create();
+
+
+        $table = $this->table('schedule_daily', ['id' => 'schedule_daily_id']);
+        $table->addColumn('chat_id', 'integer', ['null' => false])
+          ->addColumn('date_time', 'datetime')
+          ->addColumn('status_sent', 'integer', ['default' => 3])
+          ->create();
     }
 }
