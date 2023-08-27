@@ -63,6 +63,10 @@ migrate: ## Применить миграции
 	@echo "$(PURPLE) Применить миграции $(RESET)"
 	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx migrate --configuration phinx.php
 
+rollback: ## отменить последнюю миграцию
+	@echo "$(PURPLE) Применить миграции $(RESET)"
+	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
+
 rollback: ## Отменить последнюю миграцию
 	@echo "$(PURPLE) Применить миграции $(RESET)"
 	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
