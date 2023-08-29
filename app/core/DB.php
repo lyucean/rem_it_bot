@@ -13,13 +13,12 @@ class DB
     {
         $this->db = new MysqliDb(
           array(
-            'host' => $_ENV['DB_HOST'],
-            'username' => $_ENV['DB_USERNAME'],
-            'password' => $_ENV['DB_PASSWORD'],
-            'db' => $_ENV['DB_NAME'],
-            'port' => $_ENV['DB_PORT'],
-            'prefix' => '',
-            'charset' => $_ENV['DB_CHARSET']
+            'host' => $_ENV['MYSQL_HOST'],
+            'username' => $_ENV['MYSQL_USER'],
+            'password' => $_ENV['MYSQL_PASSWORD'],
+            'db' => $_ENV['MYSQL_DATABASE'],
+            'port' => $_ENV['MYSQL_PORT'],
+            'prefix' => ''
           )
         );
 

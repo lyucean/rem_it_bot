@@ -12,4 +12,3 @@ $dotenv->required('MYSQL_DATABASE')->notEmpty();
 $dotenv->required('MYSQL_PORT')->notEmpty();
 
 $dotenv->required('TELEGRAM_TOKEN')->notEmpty();
-$dotenv->required('TELEGRAM_ADMIN_CHAT_ID')->notEmpty();

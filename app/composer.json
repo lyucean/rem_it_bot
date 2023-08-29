@@ -9,7 +9,9 @@
             "lib/helper.php"
         ],
         "psr-4": {
-            "RIB\\core\\": "core"
+            "RIB\\core\\": "core",
+            "RIB\\model\\": "model",
+            "RIB\\command\\": "command"
         }
     },
     "authors": [
