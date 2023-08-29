@@ -4,9 +4,9 @@
     "type": "project",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Lyucean\\App\\": "src/"
-        }
+        "files": [
+            "config.php"
+        ]
     },
     "authors": [
         {
