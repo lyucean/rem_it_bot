@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "files": [
-            "config.php"
+            "config.php",
+            "lib/helper.php"
         ]
     },
     "authors": [
@@ -17,6 +18,8 @@
     "minimum-stability": "stable",
     "require": {
         "robmorgan/phinx": "^0.13.4",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "ext-iconv": "*",
+        "ext-mbstring": "*"
     }
 }
