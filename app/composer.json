@@ -4,6 +4,9 @@
     "type": "project",
     "license": "MIT",
     "autoload": {
+        "psr-4": {
+            "RIB\\core\\": "core"
+        },
         "files": [
             "config.php",
             "lib/helper.php"
@@ -17,6 +20,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "php": "^8.2",
         "robmorgan/phinx": "^0.13.4",
         "vlucas/phpdotenv": "^5.5",
         "ext-iconv": "*",

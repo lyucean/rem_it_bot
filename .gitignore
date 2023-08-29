@@ -3,3 +3,4 @@
 /.idea/*
 /app/vendor/*
 /app/vendor/
+/composer.phar
