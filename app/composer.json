@@ -1,6 +1,6 @@
 {
     "name": "lyucean/app",
-    "description": "PHP Start Pack",
+    "description": "Telegram bot - Remember it",
     "type": "project",
     "license": "MIT",
     "autoload": {
