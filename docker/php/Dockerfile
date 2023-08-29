@@ -13,6 +13,9 @@ RUN apt-get install -y netcat-openbsd
 # Установка расширения PDO_Mysql
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Установка расширения MySQLi
+RUN docker-php-ext-install mysqli
+
 # Установка Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

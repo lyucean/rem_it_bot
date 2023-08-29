@@ -20,6 +20,7 @@
         "robmorgan/phinx": "^0.13.4",
         "vlucas/phpdotenv": "^5.5",
         "ext-iconv": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "thingengineer/mysqli-database-class": "dev-master"
     }
 }
