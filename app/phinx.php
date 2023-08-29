@@ -14,7 +14,7 @@ return
       'default_environment' => 'production ',
       'production ' => [
         'adapter' => 'mysql',
-        'host' => $_ENV['PMA_HOST'],
+        'host' => $_ENV['MYSQL_HOST'],
         'name' => $_ENV['MYSQL_DATABASE'],
         'user' => $_ENV['MYSQL_USER'],
         'pass' => $_ENV['MYSQL_PASSWORD'],

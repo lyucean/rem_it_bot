@@ -33,7 +33,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - PMA_HOST=${PMA_HOST}
+      - PMA_HOST=${MYSQL_HOST}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     depends_on:
       - mysql
