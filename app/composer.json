@@ -4,13 +4,13 @@
     "type": "project",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "RIB\\core\\": "core"
-        },
         "files": [
             "config.php",
             "lib/helper.php"
-        ]
+        ],
+        "psr-4": {
+            "RIB\\core\\": "core"
+        }
     },
     "authors": [
         {
