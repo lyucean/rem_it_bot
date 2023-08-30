@@ -32,7 +32,7 @@ class Processing extends Model
 
             // для дев окружения всегда выкидываем ответ в консоль
 //            if (isset($_ENV['OC_ENV_DEV'])) {
-//                echo \msb\model\ddf($text, false);
+//                echo \RIB\model\ddf($text, false);
 //            }
 
             // Tracking activity
@@ -62,7 +62,7 @@ class Processing extends Model
                 $action = new Action($text);
                 $action->execute($this->telegram);
 
-//                \msb\model\ya_metric($chat_id, $text);
+//                \RIB\model\ya_metric($chat_id, $text);
                 continue;
             }
 
@@ -82,7 +82,7 @@ class Processing extends Model
                 $action = new Action($waiting['command']);
                 $action->execute($this->telegram);
 
-//                \msb\model\ya_metric($chat_id, $waiting['command']);
+//                \RIB\model\ya_metric($chat_id, $waiting['command']);
                 continue;
             }
 

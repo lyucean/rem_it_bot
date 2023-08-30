@@ -49,7 +49,7 @@ class Action
 
         include_once($file);
 
-        $class = "msb\\command\\$class";
+        $class = "RIB\\command\\$class";
         $command = new $class($registry);
 
         $reflection = new ReflectionClass($class);
