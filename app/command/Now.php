@@ -73,7 +73,7 @@ class Now
 
         $answer .= $message['text'] . PHP_EOL;
         $answer .= ' /_' . $message['message_id'];
-        $answer .= '  ||  ' . $_ENV['BOT_NAME'];
+        $answer .= '  ||  ' . $_ENV['TELEGRAM_BOT_NAME'];
 
 
         if (!empty($message['image'])) {

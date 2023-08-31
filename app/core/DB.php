@@ -65,7 +65,10 @@ class DB
         return $this->db->get("schedule");
     }
 
-    public function getSchedule($chat_id): MysqliDb|array
+    /**
+     * @throws Exception
+     */
+    public function getSchedule($chat_id): array|null
     {
         $this->db->where("chat_id", $chat_id);
         return $this->db->getOne("schedule");

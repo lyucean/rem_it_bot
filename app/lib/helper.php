@@ -165,3 +165,20 @@ if (!function_exists('shorten_link')) {
         );
     }
 }
+
+// debug display function
+if (!function_exists('ddf')) {
+    /**
+     * @param $var
+     * @param  bool  $die
+     */
+    function ddf($var, bool $die = true): void
+    {
+        echo PHP_EOL . gmdate("i:s") . ' ' . PHP_EOL;
+        print_r($var);
+        flush();
+        if ($die) {
+            die;
+        }
+    }
+}

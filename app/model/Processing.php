@@ -15,7 +15,10 @@ class Processing extends Model
 {
     const MESSAGE_LIMIT_PER_REQUEST = 10;
 
-    public function check()
+    /**
+     * @throws Exception
+     */
+    public function check(): void
     {
         // Get all the new updates and set the new correct update_id before each call
         $updates = $this->telegram->getUpdates(0, self::MESSAGE_LIMIT_PER_REQUEST);
@@ -31,9 +34,9 @@ class Processing extends Model
             $chat_id = $this->telegram->ChatID();
 
             // для дев окружения всегда выкидываем ответ в консоль
-//            if (isset($_ENV['OC_ENV_DEV'])) {
-//                echo \RIB\model\ddf($text, false);
-//            }
+            if (isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] == 'developer') {
+                echo "Сообщение: " . print_r($text, true) . PHP_EOL;
+            }
 
             // Tracking activity
             $this->db->addChatHistory(

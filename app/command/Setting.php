@@ -3,6 +3,7 @@
 
 namespace RIB\command;
 
+use Exception;
 use RIB\core\DB;
 use Telegram;
 
@@ -20,7 +21,10 @@ class Setting
         $this->db = new DB();
     }
 
-    public function index()
+    /**
+     * @throws Exception
+     */
+    public function index(): void
     {
         $schedule = $this->db->getSchedule($this->chat_id);
 
