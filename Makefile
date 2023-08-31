@@ -32,9 +32,9 @@ wait-for-mysql: ## Задержка для MySQL, необходимая для 
 
 log: ## Вывод логов
 ifeq ($(ENVIRONMENT), developer)
-	tail -f app/log/success_runner.log
+	@tail -f app/log/success_runner.log
 else
-	tail -f app/log/error_runner.log
+	@tail -f app/log/error_runner.log
 endif
 .PHONY: log
 
@@ -62,10 +62,6 @@ composer: ## Подключается к контейнеру PHP и работ�
 migrate: ## Применить миграции
 	@echo "$(PURPLE) Применить миграции $(RESET)"
 	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx migrate --configuration phinx.php
-
-rollback: ## отменить последнюю миграцию
-	@echo "$(PURPLE) Применить миграции $(RESET)"
-	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
 
 rollback: ## Отменить последнюю миграцию
 	@echo "$(PURPLE) Применить миграции $(RESET)"
