@@ -4,3 +4,4 @@
 /app/vendor/*
 /app/vendor/
 /composer.phar
+/app/file/*

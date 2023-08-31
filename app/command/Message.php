@@ -89,8 +89,9 @@ class Message
     public function addImage()
     {
         // take the highest resolution
-        $array = $this->telegram->Photo();
-        $file = $this->telegram->getFile(array_pop($array)['file_id']);
+        $data = $this->telegram->getData();
+
+        $file = $this->telegram->getFile(array_pop($data['message']['photo'])['file_id']);
 
         if (!array_key_exists('ok', $file) || !array_key_exists('result', $file)) {
             (new Error($this->telegram))->send('Я не смог скачать картинку, сервер недоступен.');

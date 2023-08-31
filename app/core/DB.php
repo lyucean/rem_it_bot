@@ -240,7 +240,7 @@ class DB
           [
             'message_id' => $data['message_id'],
             'chat_id' => $data['chat_id'],
-            'text' => $this->db->escape(trim($data['text'])),
+            'text' => $this->db->escape(trim($data['text'] ?? '')),
             'image' => $data['image'] ?? '',
             'view' => 0,
             'date_added' => $this->db->now(),

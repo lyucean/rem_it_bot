@@ -15,3 +15,4 @@ $dotenv->required('TELEGRAM_TOKEN')->notEmpty();
 $dotenv->required('TELEGRAM_BOT_NAME')->notEmpty();
 
 $_ENV['DIR_BASE'] = __DIR__;
+$_ENV['DIR_FILE'] = __DIR__ . '/file/';

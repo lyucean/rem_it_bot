@@ -51,7 +51,7 @@ class Processing extends Model
 
             // If it's an independent command, it has the highest priority.
             // Necessarily, the very first
-            if (mb_substr($text, 0, 1, 'UTF-8') == '/') {
+            if (is_string($text) && mb_substr($text, 0, 1, 'UTF-8') == '/') {
                 // Clear command_waiting
                 $this->db->cleanWaitingCommand($chat_id);
 
@@ -89,12 +89,11 @@ class Processing extends Model
                 continue;
             }
 
-            // If this is image
+            // If this image
             if ($this->telegram->getUpdateType() == 'photo') {
                 (new Message($this->telegram))->addImage();
                 continue;
             }
-
             // All that remains is sent to the controller by default
             (new Message($this->telegram))->add();
             continue;
