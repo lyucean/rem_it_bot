@@ -1,0 +1,90 @@
+name: Deployment
+
+concurrency: production
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: "Создадим каталог проекта и скопируем переменные окружения"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: | 
+              mkdir -p /var/www/rem_it_bot
+              mkdir -p /var/rem_it_bot_env
+              cp /var/www/rem_it_bot/.env /var/rem_it_bot_env/.env
+
+      - name: "Скопируйте файлы приложения на удаленный сервер."
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "./app"
+          target: "/var/www/rem_it_bot"
+
+      - name: "Вернём переменные окружения"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cp /var/rem_it_bot_env/.env /var/www/rem_it_bot/.env
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [ deploy ]
+    steps:
+      - name: "Поднимем docker-compose"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/rem_it_bot
+            docker-compose up -d
+            docker ps
+
+#  test:
+#    runs-on: ubuntu-latest
+#    needs: [ publish ]
+#    steps:
+#      - name: Check website
+#        uses: wei/curl@v1
+#        with:
+#          args: https://lyucean.com/
+#
+#  alert:
+#    name: Alert
+#    runs-on: ubuntu-latest
+#    needs: [ publish ]
+#    steps:
+#      - name: Send telegram message on push
+#        uses: appleboy/telegram-action@master
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+#          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#          message: |
+#            ${{ github.actor }} создал commit:
+#            Commit: ${{ github.event.commits[0].message }}
+#
+#            Репозиторий: ${{ github.repository }}
+#
+#            Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}
