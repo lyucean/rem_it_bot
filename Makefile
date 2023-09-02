@@ -32,9 +32,9 @@ wait-for-mysql: ## Задержка для MySQL, необходимая для 
 
 log: ## Вывод логов
 ifeq ($(ENVIRONMENT), developer)
-	@tail -f app/log/success_runner.log
+	@tail -f app/logs/success_runner.log
 else
-	@tail -f app/log/error_runner.log
+	@tail -f app/logs/error_runner.log
 endif
 .PHONY: log
 
@@ -93,4 +93,4 @@ docker-down: ## Остановим контейнеры
 
 clean:  ## Очистим папку логов
 	@echo "$(PURPLE) Очистим папку логов $(RESET)"
-	rm -f app/log/*.log
+	rm -f app/logs/*

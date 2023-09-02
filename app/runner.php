@@ -4,8 +4,8 @@
  */
 
 $max_execution_time = 60; // Зададим максимальное время выполнения нашего скрипта
-$logFile_success = 'log/success_runner.log'; // Где будем хранить логи работы бота
-$logFile_error = 'log/error_runner.log'; // Где будем хранить логи работы бота
+$logFile_success = 'logs/success_runner.log'; // Где будем хранить логи работы бота
+$logFile_error = 'logs/error_runner.log'; // Где будем хранить логи работы бота
 $targetScript = dirname(__FILE__) . '/main.php'; // Путь к целевому скрипту
 
 // Проверяем, существует ли файл логов, если нет - создадим
