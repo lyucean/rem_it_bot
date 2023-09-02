@@ -114,20 +114,21 @@ jobs:
 #        with:
 #          args: https://lyucean.com/
 #
-#  alert:
-#    name: Alert
-#    runs-on: ubuntu-latest
-#    needs: [ publish ]
-#    steps:
-#      - name: Send telegram message on push
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-#          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-#          message: |
-#            ${{ github.actor }} создал commit:
-#            Commit: ${{ github.event.commits[0].message }}
-#
-#            Репозиторий: ${{ github.repository }}
-#
-#            Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+  alert:
+    name: Alert
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - name: Send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал commit:
+            Commit: ${{ github.event.commits[0].message }}
+
+            Репозиторий: ${{ github.repository }}
+
+            Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}
