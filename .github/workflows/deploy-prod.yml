@@ -20,17 +20,23 @@ jobs:
 
       - name: "Заполнение переменных среды"
         run: |
-          echo "MYSQL_HOST=$MYSQL_HOST" >> .env
-          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}"? >> .env
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }} >> .env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
           echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
           echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
-          echo "TELEGRAM_BOT_NAME=${{ secrets.TELEGRAM_BOT_NAME }}" >> .env
-          echo "TELEGRAM_ADMIN_CHAT_ID=${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
+          echo "TELEGRAM_ADMIN_CHAT_ID=${{ env.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
+          
+          echo "TELEGRAM_BOT_NAME=${{ env.TELEGRAM_BOT_NAME }}" >> .env
           echo "MAX_OF_MESSAGES_PER_DAY=${{ env.MAX_OF_MESSAGES_PER_DAY }}" >> .env
-          echo "MAX_LINE_LENGTH=$MAX_LINE_LENGTH" >> .env
-          echo "USERNAME=${{ secrets.USERNAME }}" >> .env
+          echo "MAX_LINE_LENGTH=${{ env.MAX_LINE_LENGTH }}" >> .env
+
+      - name: Print MAX_OF_MESSAGES_PER_DAY
+        run: echo "MAX_OF_MESSAGES_PER_DAY=${{ env.MAX_OF_MESSAGES_PER_DAY }}"
+
+      - name: Print PROJECT_PATH
+        run: echo "PROJECT_PATH=${{ env.PROJECT_PATH }}"
 
       - name: "Скопируйте .env в папку проекта."
         run: cp .env ./app
@@ -38,31 +44,31 @@ jobs:
       - name: "Скопируйте .env в папку проекта."
         run: cat .env
 
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production  # использовать среду "production"
-    needs: [ build ]
-
-    steps:
-      - name: "Создадим каталог проекта"
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            mkdir -p ${{ env.PROJECT_PATH }}
-
-      - name: "Скопируйте файлы приложения на удаленный сервер."
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: "./app/*"
-          target: ${{ env.PROJECT_PATH }}
+#  deploy:
+#    runs-on: ubuntu-latest
+#    environment: production  # использовать среду "production"
+#    needs: [ build ]
+#
+#    steps:
+#      - name: "Создадим каталог проекта"
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          port: ${{ secrets.PORT }}
+#          script: |
+#            mkdir -p ${{ env.PROJECT_PATH }}
+#
+#      - name: "Скопируйте файлы приложения на удаленный сервер."
+#        uses: appleboy/scp-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          port: ${{ secrets.PORT }}
+#          source: "./app/*"
+#          target: ${{ env.PROJECT_PATH }}
 
 #  publish:
 #    runs-on: ubuntu-latest
