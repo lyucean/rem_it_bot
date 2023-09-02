@@ -15,7 +15,10 @@ services:
     volumes:
       - ./app:/app
     working_dir: /app
-    command: install
+    command:
+      - composer clear-cache
+      - composer self-update
+      - composer install
 
   mysql:
     image: mysql
