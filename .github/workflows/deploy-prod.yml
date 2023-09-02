@@ -32,10 +32,10 @@ jobs:
 #          echo "MAX_LINE_LENGTH=${{ env.MAX_LINE_LENGTH }}" >> .env
 
       - name: Print MAX_OF_MESSAGES_PER_DAY
-        run: echo "MAX_OF_MESSAGES_PER_DAY=${{ env.MAX_OF_MESSAGES_PER_DAY }}"
+        run: echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}"
 
       - name: Print PROJECT_PATH
-        run: echo "PROJECT_PATH=${{ env.PROJECT_PATH }}"
+        run: echo "PROJECT_PATH=${{ vars.PROJECT_PATH }}"
 
       - name: "Скопируйте .env в папку проекта."
         run: cp .env ./app
