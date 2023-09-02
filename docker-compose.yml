@@ -3,7 +3,7 @@ version: '3.3'
 services:
   php-cli:
     container_name: rem_it_bot_php
-    profiles: ["main"]
+#    profiles: ["main"]
     build:
       context: ./docker/php
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
 
   composer:
     container_name: rem_it_bot_composer
-    profiles: ["main"]
+#    profiles: ["main"]
     image: composer
     volumes:
       - ./app:/app
@@ -23,7 +23,7 @@ services:
 
   mysql:
     container_name: rem_it_bot_mysql
-    profiles: ["main"]
+#    profiles: ["main"]
     image: mysql
     restart: unless-stopped
     ports:
@@ -34,13 +34,13 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    profiles: ["debug"]
-    ports:
-      - "8080:80"
-    environment:
-      - PMA_HOST=${MYSQL_HOST}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    depends_on:
-      - mysql
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+##    profiles: ["debug"]
+#    ports:
+#      - "8080:80"
+#    environment:
+#      - PMA_HOST=${MYSQL_HOST}
+#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+#    depends_on:
+#      - mysql

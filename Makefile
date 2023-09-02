@@ -42,8 +42,8 @@ endif
 PROFILE =
 ifeq ($(ENVIRONMENT),developer)
 	PROFILE := --profile main,debug
-else
-	PROFILE := --profile main
+#else
+#	PROFILE := --profile main
 endif
 
 init: ## Инициализация проекта
