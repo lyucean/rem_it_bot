@@ -19,7 +19,7 @@ jobs:
       - name: "Подключим репозиторий"
         uses: actions/checkout@v3
 
-      - name: "Скопируйте .env в папку проекта."
+      - name: "Проверим переменную."
         run:  echo ${{ secrets.USERNAME }}
 
       - name: "Заполнение переменных среды"
