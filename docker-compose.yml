@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   php-cli:
+    container_name: rem_it_bot_php
     build:
       context: ./docker/php
       dockerfile: Dockerfile
@@ -11,16 +12,15 @@ services:
       - composer
 
   composer:
+    container_name: rem_it_bot_composer
     image: composer
     volumes:
       - ./app:/app
     working_dir: /app
-    command:
-      - composer clear-cache
-      - composer self-update
-      - composer install
+    command: install
 
   mysql:
+    container_name: rem_it_bot_mysql
     image: mysql
     restart: unless-stopped
     ports:
