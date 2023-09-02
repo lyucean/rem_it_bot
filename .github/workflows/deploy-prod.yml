@@ -11,11 +11,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    env:
+      PROJECT_PATH: /var/www/rem_it_bot
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: "Создадим каталог проекта и скопируем переменные окружения"
+      - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -23,9 +27,23 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: | 
-              mkdir -p /var/www/rem_it_bot
-              mkdir -p /var/rem_it_bot_env
-              cp /var/www/rem_it_bot/.env /var/rem_it_bot_env/.env
+              mkdir -p ${{ env.PROJECT_PATH }}
+
+      - name: "Заполнение переменных среды"
+        run: |
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+          echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
+          echo "TELEGRAM_BOT_NAME=${{ secrets.TELEGRAM_BOT_NAME }}" >> .env
+          echo "TELEGRAM_ADMIN_CHAT_ID=${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
+          echo "MAX_OF_MESSAGES_PER_DAY=${{ env.MAX_OF_MESSAGES_PER_DAY }}" >> .env
+          echo "MAX_LINE_LENGTH=${{ env.MAX_LINE_LENGTH }}" >> .env
+
+      - name: "Скопируйте .env в папку проекта."
+        run: cp .env ./app
 
       - name: "Скопируйте файлы приложения на удаленный сервер."
         uses: appleboy/scp-action@master
@@ -35,32 +53,23 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "./app"
-          target: "/var/www/rem_it_bot"
+          target: ${{ env.PROJECT_PATH }}
 
-      - name: "Вернём переменные окружения"
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: cp /var/rem_it_bot_env/.env /var/www/rem_it_bot/.env
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: [ deploy ]
-    steps:
-      - name: "Поднимем docker-compose"
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /var/www/rem_it_bot
-            docker-compose up -d
-            docker ps
+#  publish:
+#    runs-on: ubuntu-latest
+#    needs: [ deploy ]
+#    steps:
+#      - name: "Поднимем docker-compose"
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          port: ${{ secrets.PORT }}
+#          script: |
+#            cd ${{ env.PROJECT_PATH }}
+#            make update
+#            docker ps
 
 #  test:
 #    runs-on: ubuntu-latest
