@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "./app/*"
+          source: "./*"
           target: ${{ vars.PROJECT_PATH }}
 
 #  publish:
