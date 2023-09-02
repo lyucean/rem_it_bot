@@ -36,9 +36,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      PROJECT_PATH: ${{ env.PROJECT_PATH }}
-
     steps:
       - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
