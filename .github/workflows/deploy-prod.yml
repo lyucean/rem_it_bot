@@ -58,7 +58,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "./app/*"
-          target: "${{ vars.PROJECT_PATH }}"
+          target: "/var/www/rem_it_bot"
 
 #  publish:
 #    runs-on: ubuntu-latest
