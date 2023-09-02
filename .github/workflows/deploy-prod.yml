@@ -51,9 +51,6 @@ jobs:
             mkdir -p ${{ vars.PROJECT_PATH }}
 
       - name: List files in app directory
-        run: ls -la /github/workspace/app
-
-      - name: List files in app directory
         run: ls -la ./*
 
       - name: List files in app directory
