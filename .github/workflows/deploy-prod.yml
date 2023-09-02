@@ -20,7 +20,7 @@ jobs:
 
       - name: "Заполнение переменных среды"
         run: |
-          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }} >> .env
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
