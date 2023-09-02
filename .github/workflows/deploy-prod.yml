@@ -15,7 +15,7 @@ jobs:
     environment: production  # использовать среду "production"
 
     steps:
-      - name: Checkout repository
+      - name: "Инициализация репозитория"
         uses: actions/checkout@v3
 
       - name: "Заполнение переменных среды"
@@ -50,17 +50,8 @@ jobs:
           script: |
             mkdir -p ${{ vars.PROJECT_PATH }}
 
-      - name: List files in app directory
-        run: ls -la /github/workspace/app
-
-      - name: List files in app directory
-        run: ls -la ./*
-
-      - name: List files in app directory
-        run: ls -la ./app/
-
-      - name: List files in app directory
-        run: pwd
+      - name: "Инициализация репозитория"
+        uses: actions/checkout@v3
 
       - name: "Скопируйте файлы приложения на удаленный сервер."
         uses: appleboy/scp-action@master
@@ -70,7 +61,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "./app/*"
-          target: "/var/www/rem_it_bot"
+          target: ${{ vars.PROJECT_PATH }}
 
 #  publish:
 #    runs-on: ubuntu-latest
