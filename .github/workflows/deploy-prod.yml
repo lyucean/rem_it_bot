@@ -31,8 +31,12 @@ jobs:
           echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}" >> .env
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
 
-      - name: "Скопируйте .env в папку проекта."
-        run: cp .env ./app
+      - name: "Опубликуем артефакт, чтоб забрать его в deploy"
+        uses: actions/upload-artifact@v2
+        with:
+          name: ENV-artifact
+          path: .env
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,6 +56,14 @@ jobs:
 
       - name: "Инициализация репозитория"
         uses: actions/checkout@v3
+
+      - name: "Заберём артефакт"
+        uses: actions/download-artifact@v2
+        with:
+          name: ENV-artifact
+
+      - name: "Скопируйте .env в папку проекта."
+        run: cp .env ./app
 
       - name: "Скопируйте файлы приложения на удаленный сервер."
         uses: appleboy/scp-action@master
