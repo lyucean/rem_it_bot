@@ -1,7 +1,9 @@
+/.idea/*
 /app/.env
 /app/logs/*
-/.idea/*
+!/app/logs/.gitkeep
 /app/vendor/*
 /app/vendor/
 /composer.phar
 /app/file/*
+!/app/file/.gitkeep
