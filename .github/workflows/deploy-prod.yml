@@ -105,6 +105,7 @@ jobs:
           script_stop: true
           script: |
             cd ${{ vars.PROJECT_PATH }}
+            touch /app/logs/deploy.log
             make update >> /app/logs/deploy.log
             docker-compose ps
 
