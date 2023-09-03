@@ -1,4 +1,5 @@
 /app/.env
+/app/logs/*
 /.idea/*
 /app/vendor/*
 /app/vendor/
