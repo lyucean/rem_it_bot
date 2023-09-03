@@ -104,12 +104,12 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ${{ vars.PROJECT_PATH }}
-            touch /app/logs/deploy.log
-            make update >> /app/logs/deploy.log
+            touch ./app/logs/deploy.log
+            make update >> ./app/logs/deploy.log
             docker-compose ps
 
       - name: "Выведем логи сборки make"
-        run: cat /app/logs/deploy.log
+        run: cat ./app/logs/deploy.log
 
   test:
     runs-on: ubuntu-latest
