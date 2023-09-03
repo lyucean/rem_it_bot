@@ -102,6 +102,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          script_stop: true
           script: |
             cd ${{ vars.PROJECT_PATH }}
             make update
