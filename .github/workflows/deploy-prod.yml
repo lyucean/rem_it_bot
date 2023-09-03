@@ -31,6 +31,7 @@ jobs:
           echo "TELEGRAM_BOT_NAME=${{ vars.TELEGRAM_BOT_NAME }}" >> .env
           echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}" >> .env
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
+          echo "ENVIRONMENT=${{ vars.ENVIRONMENT }}" >> .env
 
       - name: "Опубликуем артефакт, чтоб забрать его в deploy"
         uses: actions/upload-artifact@v2

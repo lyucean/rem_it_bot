@@ -13,6 +13,10 @@ $dotenv->required('MYSQL_PORT')->notEmpty();
 
 $dotenv->required('TELEGRAM_TOKEN')->notEmpty();
 $dotenv->required('TELEGRAM_BOT_NAME')->notEmpty();
+$dotenv->required('TELEGRAM_ADMIN_CHAT_ID')->notEmpty();
+
+$dotenv->required('MAX_OF_MESSAGES_PER_DAY')->notEmpty();
+$dotenv->required('MAX_LINE_LENGTH')->notEmpty();
 
 $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';
