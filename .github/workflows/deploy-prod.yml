@@ -105,28 +105,30 @@ jobs:
           script: |
             cd ${{ vars.PROJECT_PATH }}
             touch ./app/logs/deploy.log
-            make update >> ./app/logs/deploy.log
+            make update >> ${{ vars.PROJECT_PATH }}/app/logs/deploy.log
             docker-compose ps
 
-#  test:
-#    runs-on: ubuntu-latest
-#    needs: [ publish ]
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Check error log remotely
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          password: ${{ secrets.PASSWORD }}
-#          port: ${{ secrets.PORT }}
-#          script: |
-#            if [ ! -s /app/logs/error_runner.log ]; then
-#              echo "Журнал ошибок отсутствует или пуст"
-#              exit 1
-#            fi
+  test:
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check error log remotely
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            if grep -q "All Done." ${{ vars.PROJECT_PATH }}/app/logs/deploy.log; then
+              echo "All Done. присутствует в журнале развёртывания. Всё хорошо."
+            else
+              echo "All Done. не найден в журнале ошибок. Что-то не поднялось."
+              exit 1
+            fi
 
   alert:
     name: Alert
