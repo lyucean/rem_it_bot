@@ -27,7 +27,7 @@ jobs:
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
           echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
           echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
-          echo "TELEGRAM_ADMIN_CHAT_ID=${{ env.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
+          echo "TELEGRAM_ADMIN_CHAT_ID=${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
           echo "TELEGRAM_BOT_NAME=${{ vars.TELEGRAM_BOT_NAME }}" >> .env
           echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}" >> .env
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
