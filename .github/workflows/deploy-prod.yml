@@ -106,15 +106,25 @@ jobs:
             make update
             docker ps
 
-#  test:
-#    runs-on: ubuntu-latest
-#    needs: [ publish ]
-#    steps:
-#      - name: Check website
-#        uses: wei/curl@v1
-#        with:
-#          args: https://lyucean.com/
-#
+  test:
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check error log remotely
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            if [ ! -s /app/logs/error_runner.log ]; then
+              echo "Журнал ошибок отсутствует или пуст"
+              exit 1
+            fi
 
   alert:
     name: Alert
