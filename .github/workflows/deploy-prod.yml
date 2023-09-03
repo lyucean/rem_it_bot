@@ -105,8 +105,11 @@ jobs:
           script_stop: true
           script: |
             cd ${{ vars.PROJECT_PATH }}
-            make update
+            make update >> /app/logs/deploy.log
             docker-compose ps
+
+      - name: "Выведем логи сборки make"
+        run: cat /app/logs/deploy.log
 
   test:
     runs-on: ubuntu-latest
