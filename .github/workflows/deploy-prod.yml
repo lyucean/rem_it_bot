@@ -105,7 +105,7 @@ jobs:
           script: |
             cd ${{ vars.PROJECT_PATH }}
             touch ./app/logs/deploy.log
-            make update >> ${{ vars.PROJECT_PATH }}/app/logs/deploy.log
+            - make update >> ${{ vars.PROJECT_PATH }}/app/logs/deploy.log
             docker-compose ps
 
   test:
