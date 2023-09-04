@@ -108,32 +108,31 @@ jobs:
             make docker-build                    
             make docker-up                    
             make composer-install                    
-            make wait-for-mysql                    
-            make migrate
+            make wait-for-mysql                      
+            make migrate               
 
-  #            touch ./app/logs/deploy.log
-  #            make update > ${{ vars.PROJECT_PATH }}/app/logs/deploy.log 2>&1
-#  test:
-#    runs-on: ubuntu-latest
-#    needs: [ publish ]
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Check error log remotely
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          password: ${{ secrets.PASSWORD }}
-#          port: ${{ secrets.PORT }}
-#          script: |
-#            if grep -q "All Done." ${{ vars.PROJECT_PATH }}/app/logs/deploy.log; then
-#              echo "All Done. присутствует в журнале развёртывания. Всё хорошо."
-#            else
-#              echo "All Done. не найден в журнале ошибок. Что-то не поднялось."
-#              exit 1
-#            fi
+  test:
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check error log remotely
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            running_containers=$(docker ps --filter "name=rem_it_bot_php" --filter "name=rem_it_bot_mysql" --format "{{.Names}}")
+            if [[ -z $running_containers ]]; then
+              echo "ОШИБКА: Контейнеры не запущены"
+              exit 1
+            else
+              echo "Все контейнеры работают"
+            fi
 
   alert:
     name: Alert
