@@ -11,6 +11,7 @@ on:
 jobs:
 
   build:
+    name: "Заполним переменных окружения"
     runs-on: ubuntu-latest
     environment: production  # использовать среду "production"
 
@@ -33,19 +34,6 @@ jobs:
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
           echo "ENVIRONMENT=${{ vars.ENVIRONMENT }}" >> .env
 
-      - name: "Опубликуем артефакт, чтоб забрать его в deploy"
-        uses: actions/upload-artifact@v3
-        with:
-          name: ENV-artifact
-          path: .env
-
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    environment: production  # использовать среду "production"
-
-    steps:
       - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
         with:
@@ -55,14 +43,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             mkdir -p ${{ vars.PROJECT_PATH }}
-
-      - name: "Инициализация репозитория"
-        uses: actions/checkout@v3
-
-      - name: "Заберём артефакт"
-        uses: actions/download-artifact@v3
-        with:
-          name: ENV-artifact
 
       - name: "Скопируйте .env в папку проекта."
         run: cp .env ./app
@@ -77,22 +57,10 @@ jobs:
           source: "./*"
           target: ${{ vars.PROJECT_PATH }}
 
-  preparation:
+  deploy:
+    name: "Запуск контейнера"
     runs-on: ubuntu-latest
-    needs: [ deploy ]
-    steps:
-      - name: "Поставим make" # Он нам нужен для сборки
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: sudo apt-get update && sudo apt-get install make -y  # Установка make на Debian
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: [ preparation ]
+    needs: [ build ]
     environment: production  # использовать среду "production"
     steps:
       - name: "Поднимем docker-compose"
@@ -112,6 +80,7 @@ jobs:
             make migrate               
 
   test:
+    name: "Тест"
     runs-on: ubuntu-latest
     needs: [ publish ]
     steps:
@@ -137,7 +106,7 @@ jobs:
   alert:
     name: "Уведомление"
     runs-on: ubuntu-latest
-    needs: [ publish ]
+    needs: [ test ]
     steps:
       - name: "Отправить телеграмму по push-уведомлению"
         uses: appleboy/telegram-action@master
