@@ -104,9 +104,14 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ${{ vars.PROJECT_PATH }}
-            touch ./app/logs/deploy.log
-            make update > ${{ vars.PROJECT_PATH }}/app/logs/deploy.log 2>&1
-            docker-compose ps
+#            touch ./app/logs/deploy.log
+#            make update > ${{ vars.PROJECT_PATH }}/app/logs/deploy.log 2>&1
+            make docker-pull                    
+            make docker-build                    
+            make docker-up                    
+            make composer-install                    
+            make wait-for-mysql                    
+            make migrate
 
 #  test:
 #    runs-on: ubuntu-latest
