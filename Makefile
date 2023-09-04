@@ -47,13 +47,13 @@ ifeq ($(ENVIRONMENT),developer)
 endif
 
 init: ## Инициализация проекта
-init: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log end
+init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log end
 
 update: ## Пересобрать контейнер, обновить композер и миграции
-update: docker-down clean docker-pull docker-build docker-up composer-install wait-for-mysql migrate log end
+update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log end
 
 restart: ## Restart docker containers
-restart: docker-down clean docker-up log
+restart: clean docker-down docker-up log
 
 php-bash: ## Подключается к контейнеру PHP
 	docker-compose $(ENV) exec php-cli bash

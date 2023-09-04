@@ -102,14 +102,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          timeout-minutes: 5 # Increase the timeout to a higher value
           script: |
             cd ${{ vars.PROJECT_PATH }}
             touch ./app/logs/deploy.log
-            make update
+            - make update >> ${{ vars.PROJECT_PATH }}/app/logs/deploy.log
             docker-compose ps
-
-  #            - make update >> ${{ vars.PROJECT_PATH }}/app/logs/deploy.log
 
 #  test:
 #    runs-on: ubuntu-latest
