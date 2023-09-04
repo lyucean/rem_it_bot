@@ -47,10 +47,10 @@ ifeq ($(ENVIRONMENT),developer)
 endif
 
 init: ## Инициализация проекта
-init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log end
+init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log
 
 update: ## Пересобрать контейнер, обновить композер и миграции
-update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log end
+update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
 
 restart: ## Restart docker containers
 restart: clean docker-down docker-up log
@@ -96,7 +96,3 @@ docker-down: ## Остановим контейнеры
 clean:  ## Очистим папку логов
 	@echo "$(PURPLE) Очистим папку логов $(RESET)"
 	rm -f app/logs/*
-
-end: ## нужно чтоб GitAction видел, что скрипт выполнился корректно
-	@echo "Makefile executed successfully"
-	@echo "##[set-output name=make_result]success"
