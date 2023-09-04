@@ -82,7 +82,7 @@ jobs:
   test:
     name: "Тест"
     runs-on: ubuntu-latest
-    needs: [ publish ]
+    needs: [ deploy ]
     steps:
       - name: "Подготовка репозитория"
         uses: actions/checkout@v3
