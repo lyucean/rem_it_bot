@@ -46,6 +46,16 @@ class DB
         return $this->db->insert('schedule_daily', $data);
     }
 
+    /** Очистим старые отправленные сообщения
+     * @throws Exception
+     */
+    public function cleanSendingDailyOld(): void
+    {
+        $this->db->where("date_time", gmdate('Y-m-d'), "<");
+        $this->db->where("status_sent", 1);
+        $this->db->delete("schedule_daily");
+    }
+
     /** Изменим статус на отправлено
      * @throws Exception
      */

@@ -103,5 +103,8 @@ class Schedule extends Model
                 );
             }
         }
+
+        // Тут же почистим все старые отправленные сообщения за прошлые дни
+        $this->db->cleanSendingDailyOld();
     }
 }
