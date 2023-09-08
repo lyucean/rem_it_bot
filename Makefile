@@ -41,9 +41,9 @@ endif
 # Если это developer окружение, то подключим debug профиль
 PROFILE =
 ifeq ($(ENVIRONMENT),developer)
-	PROFILE := --profile main,debug
-#else
-#	PROFILE := --profile main
+	PROFILE := --profile dev
+else
+	PROFILE := --profile main
 endif
 
 init: ## Инициализация проекта
