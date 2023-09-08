@@ -6,7 +6,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# нужно для проверки оступа к БД
+# нужно для проверки доступа к БД
 RUN apt-get install -y netcat-openbsd
 
 # Установка расширения zip для работы с composer
@@ -27,7 +27,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Установка часового пояса Москвы
 RUN ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
-# Такой запук, нам нужен, чтоб писать вывод ошибок в лог
-#  && tail -f /dev/null позволяет не завершать докер после выполнения
-CMD ["sh", "-c", "php /app/runner.php >> /app/logs/error_runner.log 2>&1 && tail -f /dev/null"]
-
+# CMD будет выполняться только после доступности MySQL
+CMD ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done; php /app/runner.php >> /app/logs/error_runner.log 2>&1 && tail -f /dev/null"]
