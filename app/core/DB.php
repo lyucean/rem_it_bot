@@ -58,6 +58,30 @@ class DB
     // Таблица расписание отправки сообщений ---------------------------------------------------
 
     /**
+     * Получить пользователей, для которых нужно создать расписание сегодня
+     * @throws Exception
+     */
+    public function getSchedulesNeedToday(): MysqliDb|array
+    {
+        return $this->db->query(
+          "SELECT chat_id
+            ,hour_start
+            ,hour_end
+            ,time_zone_offset
+            ,quantity
+            ,date_modified
+            FROM
+                schedule AS s
+            WHERE
+                s.quantity != 0 AND
+                    chat_id NOT IN (
+                    SELECT chat_id FROM schedule_daily AS sd WHERE DATE(sd.date_time) = DATE(NOW())
+                                   )
+            AND chat_id IN (SELECT m.chat_id FROM message AS m WHERE s.chat_id)"
+        );
+    }
+
+    /**
      * @throws Exception
      */
     public function getSchedules(): MysqliDb|array
