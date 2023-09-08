@@ -82,16 +82,13 @@ class Schedule extends Model
 
     /**
      * Fills out the schedule of notifications for the current day
+     * @throws Exception
      */
     public function generate(): void
     {
-        // every day we will create a schedule for today
-        if ('0' != gmdate("G") || '01' != gmdate("i")) {
-            return;
-        }
-
-        foreach ($this->db->getSchedules() as $item) {
-            // how many notifications to send per day
+        // Получим список пользователей, которым необходимо создать расписание сегодня
+        foreach ($this->db->getSchedulesNeedToday() as $item) {
+            // сколько уведомлений отправлять сегодня
             for ($i = 0; $i < $item['quantity']; $i++) {
                 $this->db->addSendingDailyNow(
                   [
