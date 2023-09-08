@@ -90,9 +90,9 @@ class Setting
     {
         $quantity = (int)$this->telegram->Text();
 
-        if ($quantity < 1 || $_ENV['MAX_OF_MESSAGES_PER_DAY'] < $quantity) {
+        if ($quantity < 0 || $_ENV['MAX_OF_MESSAGES_PER_DAY'] < $quantity) {
             (new Error($this->telegram))->send(
-                'Я ожидаю цифру от 1 до ' . $_ENV['MAX_OF_MESSAGES_PER_DAY']
+                'Я ожидаю цифру от 0 до ' . $_ENV['MAX_OF_MESSAGES_PER_DAY']
             );
             // return the command on hold;
             $this->db->setWaitingCommand($this->chat_id, '/setting/set_number');
