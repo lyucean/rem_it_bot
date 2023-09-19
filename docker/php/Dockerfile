@@ -27,5 +27,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Установка часового пояса Москвы
 RUN ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
-# CMD будет выполняться только после доступности MySQL
-CMD ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done; php /app/runner.php >> /app/logs/error_runner.log 2>&1 && tail -f /dev/null"]
+# CMD
+CMD ["sh", "-c", "php /app/runner.php >> /app/logs/error_runner.log 2>&1 && tail -f /dev/null"]
