@@ -64,7 +64,7 @@ class Catalog
             if (!empty($image)) {
                 $text = ' 🖌️ - ' . $text;
             }
-            $answer[] = '/_' . $message['message_id'] . ' - ' . $text . "\n";
+            $answer[] = '/_' . $message['message_id'] . ' - ' . stripslashes($text) . "\n";
         }
 
         return $answer;

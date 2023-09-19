@@ -46,7 +46,7 @@ class Message
         }
 
         if (isset($data['text'])) {
-            $answer['text'] = self::EMOJI_ICON . fix_breaks($data['text']);
+            $answer['text'] = self::EMOJI_ICON . stripslashes($data['text']);
         }
 
         $this->telegram->sendMessage($answer);

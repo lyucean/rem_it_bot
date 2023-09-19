@@ -72,18 +72,6 @@ if (!function_exists('shorten_text')) {
     }
 }
 
-// fixes line breaks
-if (!function_exists('fix_breaks')) {
-    /**
-     * @param string $text
-     * @return string
-     */
-    function fix_breaks(string $text) : string
-    {
-        return str_replace( '\n', "\n", $text );
-    }
-}
-
 // shorten_link
 if (!function_exists('shorten_link')) {
     /**

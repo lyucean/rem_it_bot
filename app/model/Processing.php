@@ -56,7 +56,7 @@ class Processing extends Model
                 // Clear command_waiting
                 $this->db->cleanWaitingCommand($chat_id);
 
-                // if it is a request for a specific message
+                // если это запрос на конкретное сообщение
                 if (preg_match('/^\/_[0-9]+$/', $text)) {
                     (new Now($this->telegram))->get(substr(strrchr($text, "_"), 1));
                     continue;

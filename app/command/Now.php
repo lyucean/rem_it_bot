@@ -25,7 +25,7 @@ class Now
         $this->db = new DB();
     }
 
-    public function index()
+    public function index(): void
     {
         $message = $this->db->getMessagePrepared($this->chat_id);
 
@@ -92,7 +92,7 @@ class Now
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => fix_breaks($answer),
+                'text' => stripslashes($answer),
             ]
         );
     }
