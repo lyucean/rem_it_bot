@@ -17,6 +17,7 @@ $dotenv->required('TELEGRAM_ADMIN_CHAT_ID')->notEmpty();
 
 $dotenv->required('MAX_OF_MESSAGES_PER_DAY')->notEmpty();
 $dotenv->required('MAX_LINE_LENGTH')->notEmpty();
+$dotenv->required('PERIOD_MESSAGE_CHECKED')->notEmpty();
 
 $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';

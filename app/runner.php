@@ -7,6 +7,7 @@ $max_execution_time = 60; // Зададим максимальное время 
 $logFile_success = 'logs/success_runner.log'; // Где будем хранить логи работы бота
 $logFile_error = 'logs/error_runner.log'; // Где будем хранить логи работы бота
 $targetScript = dirname(__FILE__) . '/main.php'; // Путь к целевому скрипту
+$periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверки скрипта
 
 // Проверяем, существует ли файл логов, если нет - создадим
 if (!file_exists($logFile_success)) {
@@ -37,7 +38,7 @@ while (true) {
     file_put_contents($logFile_success, $logMessage, FILE_APPEND);
 
     // Завершаем текущую итерацию, чтобы избежать нагрузки на сервер
-    sleep(1); // Задержка 1 секунда перед каждой итерацией цикла
+    sleep($periodChecked); // Задержка в секундах перед каждой итерацией цикла
 
     // Определяем текущее время
     $currentTime = time();
