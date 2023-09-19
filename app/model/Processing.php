@@ -2,6 +2,7 @@
 
 namespace RIB\model;
 
+use Exception;
 use RIB\command\Message;
 use RIB\command\Now;
 use RIB\core\Action;

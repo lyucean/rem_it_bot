@@ -18,7 +18,8 @@ class DB
             'password' => $_ENV['MYSQL_PASSWORD'],
             'db' => $_ENV['MYSQL_DATABASE'],
             'port' => $_ENV['MYSQL_PORT'],
-            'prefix' => ''
+            'prefix' => '',
+            'charset' => 'utf8mb4'
           )
         );
 
