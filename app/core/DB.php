@@ -9,6 +9,9 @@ class DB
 {
     private MysqliDb $db;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->db = new MysqliDb(
@@ -23,11 +26,17 @@ class DB
           )
         );
 
+        //Проверка инициализации MySQL
+        try {
+            @$this->db->ping();
+        } catch (Exception $e) {
+            die("Не удалось установить соединение с базой данных." . PHP_EOL .  $e->getMessage());
+        }
+
         return $this;
     }
 
     // Таблица заданий для ежедневной отправки сообщений -----------------------
-
     /**
      * Получим массив сообщений для отправки
      * @throws Exception
