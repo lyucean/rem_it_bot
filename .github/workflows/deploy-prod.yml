@@ -78,7 +78,7 @@ jobs:
             make docker-up                    
             make composer-install                    
             make wait-for-mysql                      
-            make migrate               
+            make migrate
 
   test:
     name: "Тест"
