@@ -16,10 +16,6 @@ help:
 	@grep -E '^[a-zA-Z-]+:.*?## .*$$' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-17s\033[0m %s\n", $$1, $$2}'
 .PHONY: help
 
-delay: # Задержка, она требуется, чтоб MYSQL успел инициализироваться
-	@sleep 3
-.PHONY: delay
-
 wait-for-mysql: ## Задержка для MySQL, необходимая для инициализации, работает, только если mysql будет торчать наружу
 	@echo "$(PURPLE)Ожидание инициализации MySQL$(RESET)"
 	@seconds=0; \
