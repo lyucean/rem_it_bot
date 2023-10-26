@@ -14,6 +14,10 @@ if (!file_exists($logFile_success)) {
     touch($logFile_success);
     chmod($logFile_success, 0777); // поправим права
 }
+if (!file_exists($logFile_error)) {
+    touch($logFile_error);
+    chmod($logFile_error, 0777); // поправим права
+}
 
 // Устанавливаем максимальное время выполнения скрипта в 60 секунд
 set_time_limit(60);
