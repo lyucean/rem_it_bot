@@ -95,7 +95,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: docker ps
+          script: |
+            running_containers=$(docker ps --filter "name=rem_it_bot_php" --filter "name=rem_it_bot_mysql" --format "{{.Names}}")
+            if [[ -z $running_containers ]]; then
+              echo "ОШИБКА: Контейнеры не запущены"
+              exit 1
+            else
+              echo "Все контейнеры работают"
+            fi
 
   alert:
     name: "Уведомление"
