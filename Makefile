@@ -19,7 +19,7 @@ help:
 wait-for-mysql: ## Задержка для MySQL, необходимая для инициализации, работает, только если mysql будет торчать наружу
 	@echo "$(PURPLE)Ожидание инициализации MySQL$(RESET)"
 	@seconds=0; \
-	while ! docker-compose exec -T php-cli nc -z mysql 3306; do \
+	while ! docker-compose $(ENV) exec -T php-cli nc -z mysql 3306; do \
 		seconds=$$((seconds+1)); \
 		sleep 1; \
 		echo "Прошло: $$seconds сек."; \
