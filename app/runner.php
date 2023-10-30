@@ -39,8 +39,7 @@ while (true) {
     exec("php $targetScript", $output);
 
     // Засекаем время после выполнения скрипта и вычисляем разницу в миллисекундах
-    $endTime = microtime(true);
-    $executionTimeMs = ($endTime - $startTime) * 1000;
+    $executionTimeMs = (microtime(true) - $startTime) * 1000;
 
     $log($logFile_success,$output, $executionTimeMs);
 
