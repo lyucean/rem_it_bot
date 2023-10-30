@@ -21,6 +21,7 @@ jobs:
 
       - name: "Заполнение переменных среды"
         run: |
+          echo "ENVIRONMENT=${{ vars.ENVIRONMENT }}" >> .env
           echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
@@ -33,7 +34,7 @@ jobs:
           echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}" >> .env
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
           echo "PERIOD_MESSAGE_CHECKED=${{ vars.PERIOD_MESSAGE_CHECKED }}" >> .env
-          echo "ENVIRONMENT=${{ vars.ENVIRONMENT }}" >> .env
+          echo "BACKUPS_FOLDER=${{ vars.BACKUPS_FOLDER }}" >> .env
 
       - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
