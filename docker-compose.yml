@@ -9,7 +9,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./app:/app
-      - ${BACKUPS_FOLDER}:/backup
     depends_on:
       - composer
     networks:
