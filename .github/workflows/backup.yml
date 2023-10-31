@@ -45,3 +45,16 @@ jobs:
           script: |
             cd ${{ vars.PROJECT_PATH }}
             make backup-file
+
+  alert:
+    name: "Уведомление"
+    runs-on: ubuntu-latest
+    needs: [ backup-file, backup-db ]
+    steps:
+      - name: "Отправить сообщение через телеграм"
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            Бекап проекта ${{ github.repository }} сделан :)
