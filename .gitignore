@@ -1,11 +1,12 @@
 /.idea/*
 /app/.env
 /app/logs/*
+!/app/logs/.gitkeep
 /app/vendor/*
 /app/vendor/
 /composer.phar
 /app/file/*
-/dump
 !/app/file/.gitkeep
-!/app/logs/.gitkeep
+/dump
 !/app/backup/.gitkeep
+/backup/dump.sql
