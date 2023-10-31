@@ -21,3 +21,5 @@ $dotenv->required('PERIOD_MESSAGE_CHECKED')->notEmpty();
 
 $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';
+
+date_default_timezone_set('Europe/Moscow'); // Установка временной зоны на Московское время
