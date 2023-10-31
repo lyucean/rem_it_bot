@@ -40,8 +40,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     networks:
       - rib_network
-    volumes:
-      - rem-mysql-data:/var/lib/mysql # Создаем привязку тома к папке MySQL внутри контейнера
+#    volumes:
+#      - rem-mysql-data:/var/lib/mysql # Создаем привязку тома к папке MySQL внутри контейнера
 
 
   phpmyadmin:
@@ -61,5 +61,5 @@ networks:
   rib_network:
     driver: bridge
 
-volumes:
-  rem-mysql-data: # Определяем том для сохранения данных MySQL
+#volumes:
+#  rem-mysql-data: # Определяем том для сохранения данных MySQL
