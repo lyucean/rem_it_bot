@@ -10,3 +10,4 @@
 /dump
 !/app/backup/.gitkeep
 /backup/dump.sql
+/backup/*

@@ -1,0 +1,47 @@
+name: Making a backup
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Запускать каждый день в полночь UTC
+  push:
+    paths:
+      - ".github/workflows/backup.yml"
+
+
+jobs:
+  backup-db:
+    name: "Бекап БД"
+    runs-on: ubuntu-latest
+    environment: production  # использовать среду "production"
+    steps:
+      - name: "Подготовка репозитория"
+        uses: actions/checkout@v3
+
+      - name: "Снимем дамп"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ${{ vars.PROJECT_PATH }}
+            make backup-db
+
+  backup-file:
+    name: "Бекап файлов"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Подготовка репозитория"
+        uses: actions/checkout@v3
+
+      - name: "Создаём архив"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ${{ vars.PROJECT_PATH }}
+            make backup-file

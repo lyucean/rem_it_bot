@@ -7,6 +7,9 @@ include app/.env
 # И укажем его для docker-compose
 ENV = --env-file app/.env
 
+# Дата время
+BACKUP_DATETIME := $(shell date '+%Y-%m-%d')
+
 # Добавим красоты и чтоб наши команды было видно в теле скрипта
 PURPLE = \033[1;35m $(shell date +"%H:%M:%S") --
 RESET = --\033[0m
@@ -65,10 +68,6 @@ rollback: ## Отменить последнюю миграцию
 	@echo "$(PURPLE) Применить миграции $(RESET)"
 	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
 
-import-db: ## Импорт образа бд
-	@echo "$(PURPLE) Импорт БД (если нужен) $(RESET)"
-	@#gunzip < ./app/db/dump.sql.gz | docker-compose $(ENV) exec -T mysql mysql -uroot -p${MYSQL_ROOT_PASSWORD} BD
-
 composer-install: ## Поставим пакеты композера
 	@echo "$(PURPLE) Поставим пакеты композера $(RESET)"
 	@docker-compose $(ENV) run --rm composer
@@ -92,3 +91,12 @@ docker-down: ## Остановим контейнеры
 clean:  ## Очистим папку логов
 	@echo "$(PURPLE) Очистим папку логов $(RESET)"
 	rm -f app/logs/*
+
+backup-db:  ## Снимем дамп с БД
+	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
+	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "backup/RIB_$(BACKUP_DATETIME).sql.gz"
+
+backup-file:  ## Снимем дамп с БД
+	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
+	tar -cvzf ./backup/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
+
