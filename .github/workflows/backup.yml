@@ -16,7 +16,7 @@ jobs:
       - name: "Подготовка репозитория"
         uses: actions/checkout@v3
 
-      - name: "Снимем дамп"
+      - name: "Снимем дамп БД"
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
