@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - ".github/workflows/backup.yml"
-
+      - "!/.github/workflows/backup.yml"
 
 jobs:
   backup-db:
