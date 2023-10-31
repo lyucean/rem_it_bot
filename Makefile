@@ -94,9 +94,9 @@ clean:  ## Очистим папку логов
 
 backup-db:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
-	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "backup/RIB_$(BACKUP_DATETIME).sql.gz"
+	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/RIB_$(BACKUP_DATETIME).sql.gz"
 
 backup-file:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
-	tar -cvzf ./backup/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
+	tar -cvzf ${BACKUPS_FOLDER}/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
 
