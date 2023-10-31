@@ -9,5 +9,3 @@
 !/app/file/.gitkeep
 /dump
 !/app/backup/.gitkeep
-/backup/dump.sql
-/backup/*
