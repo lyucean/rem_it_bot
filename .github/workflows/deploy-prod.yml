@@ -6,6 +6,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
+      - "/*"
       - "!/.github/workflows/backup.yml"
   pull_request:
     branches: [ "main" ]
