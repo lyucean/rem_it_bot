@@ -42,7 +42,7 @@ class Menu
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    '🆘 Пожаловаться на баг',
+                    '🆘 Тех. поддержка',
                     $url = '',
                     '/help'
                 )
