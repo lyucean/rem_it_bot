@@ -30,6 +30,7 @@ jobs:
   backup-file:
     name: "Бекап файлов"
     runs-on: ubuntu-latest
+    environment: production  # использовать среду "production"
     steps:
       - name: "Подготовка репозитория"
         uses: actions/checkout@v3
