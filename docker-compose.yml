@@ -17,7 +17,7 @@ services:
   composer:
     container_name: rem_it_bot_composer
     profiles: ["main", "dev"]
-    image: composer
+    image: composer:2.6.5
     volumes:
       - ./app:/app
     working_dir: /app
@@ -28,7 +28,7 @@ services:
   mysql:
     container_name: rem_it_bot_mysql
     profiles: ["main", "dev"]
-    image: mysql
+    image: mysql:8.2.0
     restart: unless-stopped
     ports:
       - ${MYSQL_PORT}:3306
