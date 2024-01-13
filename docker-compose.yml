@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   php-cli:
+    restart: unless-stopped
     container_name: rem_it_bot_php
     profiles: ["main", "dev"]
     build:
