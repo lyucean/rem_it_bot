@@ -52,10 +52,10 @@ while (true) {
     $output = [];
     exec("php $targetScript", $output);
 
-    // Засекаем время после выполнения скрипта и вычисляем разницу в миллисекундах
-    $executionTimeMs = (microtime(true) - $startTime) * 1000;
+    // Засекаем время после выполнения скрипта и вычисляем разницу в секундах с округлением до сотых
+    $executionTimeSec = round(microtime(true) - $startTime, 2);
 
-    $log($logFile_success,$output, $executionTimeMs);
+    $log($logFile_success, $output, $executionTimeSec);
 
     // Завершаем текущую итерацию, чтобы избежать нагрузки на сервер
     sleep($periodChecked); // Задержка в секундах перед каждой итерацией цикла
