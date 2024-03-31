@@ -46,7 +46,7 @@ else
 endif
 
 init: ## Инициализация проекта
-init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql import-db migrate log
+init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
 
 update: ## Пересобрать контейнер, обновить композер и миграции
 update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
@@ -92,11 +92,23 @@ clean:  ## Очистим папку логов
 	@echo "$(PURPLE) Очистим папку логов $(RESET)"
 	rm -f app/logs/*
 
+import-dump:  ## Импорт тестовой БД из дампа для разработки
+	@echo "$(PURPLE) Импорт тестовой БД из дампа для разработки $(RESET)"
+	@if [ -f "app/db/dump/RIB_test.sql" ]; then \
+		docker-compose $(ENV) exec -T mysql sh -c 'exec mysql -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' < "app/db/dump/RIB_test.sql"; \
+	else \
+		echo "Тестовый дампа нет"; \
+	fi
+
+save-dump:  ## Снимем тестовой дамп БД дампа для разработки
+	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
+	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' > "app/db/dump/RIB_test.sql"
+
 backup-db:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
 	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/RIB_$(BACKUP_DATETIME).sql.gz"
 
-backup-file:  ## Снимем дамп с БД
+backup-file:  ## Делаем архив данных
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
 	tar -cvzf ${BACKUPS_FOLDER}/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
 

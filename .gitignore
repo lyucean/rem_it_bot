@@ -9,3 +9,4 @@
 !/app/file/.gitkeep
 /dump
 !/app/backup/.gitkeep
+/app/db/dump/RIB_test.sql
