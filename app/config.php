@@ -23,3 +23,14 @@ $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';
 
 date_default_timezone_set('Europe/Moscow'); // Установка временной зоны на Московское время
+
+// Копим логи ошибок в Sentry
+if (!empty($_ENV['SENTRY_DNS'])) {
+    \Sentry\init([
+        'dsn' => $_ENV['SENTRY_DNS'],
+        'release' => date("Y-m-d_H.i", filectime(__FILE__)),
+        'environment' => $_ENV['ENVIRONMENT'],
+        'traces_sample_rate' => 1.0,
+        'profiles_sample_rate' => 1.0,
+    ]);
+}

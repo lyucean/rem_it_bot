@@ -28,6 +28,7 @@
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "thingengineer/mysqli-database-class": "dev-master",
-        "eleirbag89/telegrambotphp": "^1.4"
+        "eleirbag89/telegrambotphp": "^1.4",
+        "sentry/sentry": "^4.6"
     }
 }
