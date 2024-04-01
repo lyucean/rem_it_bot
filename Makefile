@@ -31,9 +31,9 @@ wait-for-mysql: ## Задержка для MySQL, необходимая для 
 
 log: ## Вывод логов
 ifeq ($(ENVIRONMENT), developer)
-	@tail -f app/logs/success_runner.log
+	@tail -f app/logs/main.log
 else
-	@tail -f app/logs/error_runner.log
+	@tail app/logs/main.log
 endif
 .PHONY: log
 

@@ -28,4 +28,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 # CMD
-CMD ["sh", "-c", "php /app/runner.php >> /app/logs/error_runner.log 2>&1 && tail -f /dev/null"]
+CMD ["sh", "-c", "php /app/main.php >> /app/logs/main.log 2>&1 && tail -f /dev/null"]

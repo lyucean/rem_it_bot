@@ -36,7 +36,7 @@ class Processing extends Model
 
             // для дев окружения всегда выкидываем ответ в консоль
             if (isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] == 'developer') {
-                echo "Сообщение: " . print_r($text, true) . PHP_EOL;
+                echo date('Y-m-d H:i:s') . "Сообщение: " . print_r($text, true) . PHP_EOL;
             }
 
             // Tracking activity

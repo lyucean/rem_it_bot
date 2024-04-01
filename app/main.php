@@ -5,11 +5,20 @@ require_once __DIR__ . '/vendor/autoload.php';
 use RIB\model\Processing;
 use RIB\model\Schedule;
 
-// Проверяем расписание, нужно ли кому-то отправить сообщение
-(new  Schedule())->check();
+sleep(5); // Нужно, для инициализации БД
 
-// Ответ на все сообщения раз в секунду
-(new Processing())->check();
+$periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверки скрипта
 
-// Давайте создадим список рассылки на день.
-(new  Schedule())->generate();
+// Бесконечный цикл, который будет вызывать основной файл скрипта
+while (true) {
+    // Проверяем расписание, нужно ли кому-то отправить сообщение
+    (new  Schedule())->check();
+
+    // Ответ на все сообщения раз в секунду
+    (new Processing())->check();
+
+    // Давайте создадим список рассылки на день.
+    (new  Schedule())->generate();
+
+    sleep($periodChecked);
+}

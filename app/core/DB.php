@@ -30,7 +30,7 @@ class DB
         try {
             @$this->db->ping();
         } catch (Exception $e) {
-            die("Не удалось установить соединение с базой данных." . PHP_EOL .  $e->getMessage());
+            echo date('Y-m-d H:i:s') . " Не удалось установить соединение с базой данных. " . $e->getMessage() . PHP_EOL;
         }
 
         return $this;
