@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use RIB\model\Processing;
 use RIB\model\Schedule;
 
-sleep(5); // Нужно, для инициализации БД
+sleep(2); // Нужно, для инициализации БД
 
 $periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверки скрипта
 

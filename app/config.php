@@ -30,7 +30,7 @@ if (!empty($_ENV['SENTRY_DNS'])) {
         'dsn' => $_ENV['SENTRY_DNS'],
         'release' => date("Y-m-d_H.i", filectime(__FILE__)),
         'environment' => $_ENV['ENVIRONMENT'],
-        'traces_sample_rate' => 1.0,
+        'traces_sample_rate' => 0.2,
         'profiles_sample_rate' => 1.0,
     ]);
 }
