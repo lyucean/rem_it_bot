@@ -11,13 +11,12 @@ $periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверк
 
 $logger = new Logger("RIB-".$_ENV['ENVIRONMENT']); // Инициализация логов
 $logger->pushHandler(new LogtailHandler($_ENV['BETTERSTACK_TOKEN']));
-$logger->info("Запуск бота", [
+$logger->info("Запуск бота PID", [
     "environment" => $_ENV['ENVIRONMENT'],
-    "release" => $_ENV['RELEASE'],
-    "pid" => getmypid()
+    "release" => $_ENV['RELEASE']
 ]);
 
-sleep(2); // Нужно, для инициализации БД
+sleep(5); // Нужно, для инициализации БД
 
 // Бесконечный цикл, который будет вызывать основной файл скрипта
 while (true) {
