@@ -23,9 +23,9 @@ $dotenv->required('BETTERSTACK_TOKEN')->notEmpty();
 $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';
 
-$_ENV['RELEASE'] = date("Y-m-d_H.i", filectime(__FILE__));
-
 date_default_timezone_set('Europe/Moscow'); // Установка временной зоны на Московское время
+
+$_ENV['RELEASE'] = date("Y-m-d_H.i", filectime(__FILE__));
 
 // Копим логи ошибок в Sentry
 if (!empty($_ENV['SENTRY_DNS'])) {
