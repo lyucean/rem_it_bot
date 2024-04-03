@@ -33,7 +33,7 @@ if (!empty($_ENV['SENTRY_DNS'])) {
         'dsn' => $_ENV['SENTRY_DNS'],
         'release' => $_ENV['RELEASE'],
         'environment' => $_ENV['ENVIRONMENT'],
-        'traces_sample_rate' => 0.2,
+        'traces_sample_rate' => 1.0,
         'profiles_sample_rate' => 1.0,
     ]);
 }
