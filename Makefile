@@ -46,10 +46,10 @@ else
 endif
 
 init: ## Инициализация проекта
-init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
+init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate
 
 update: ## Пересобрать контейнер, обновить композер и миграции
-update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate log
+update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate
 
 restart: ## Restart docker containers
 restart: clean docker-down docker-up log
