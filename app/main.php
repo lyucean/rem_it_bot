@@ -28,6 +28,7 @@ while (true) {
     (new Processing())->check();
 
     // Давайте создадим список рассылки на день.
+    (new  Schedule())->generate();
 
     sleep($periodChecked);
 }
