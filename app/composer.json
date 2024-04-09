@@ -30,6 +30,7 @@
         "thingengineer/mysqli-database-class": "dev-master",
         "eleirbag89/telegrambotphp": "^1.4",
         "sentry/sentry": "^4.6",
-        "logtail/monolog-logtail": "^3.1"
+        "logtail/monolog-logtail": "^3.1",
+      "ext-curl": "*"
     }
 }

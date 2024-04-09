@@ -170,3 +170,26 @@ if (!function_exists('ddf')) {
         }
     }
 }
+
+
+
+// heartbeat - стучим, что бот работает и все с ним ок
+if (!function_exists('heartbeat')) {
+    /**
+     * @return void
+     */
+    function heartbeat(): void
+    {
+        if (!empty($_ENV['HEARTBEAT_TOKEN'])) {
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, 'https://uptime.betterstack.com/api/v1/heartbeat/' . $_ENV['HEARTBEAT_TOKEN']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_NOBODY, true);
+
+            curl_exec($ch);
+            curl_close($ch);
+        }
+    }
+}

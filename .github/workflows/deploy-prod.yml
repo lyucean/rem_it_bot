@@ -32,6 +32,7 @@ jobs:
           echo "TELEGRAM_ADMIN_CHAT_ID=${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}" >> .env
           echo "SENTRY_DNS=${{ secrets.SENTRY_DNS }}" >> .env
           echo "BETTERSTACK_TOKEN=${{ secrets.BETTERSTACK_TOKEN }}" >> .env
+          echo "HEARTBEAT_TOKEN=${{ secrets.HEARTBEAT_TOKEN }}" >> .env
           echo "TELEGRAM_BOT_NAME=${{ vars.TELEGRAM_BOT_NAME }}" >> .env
           echo "MAX_OF_MESSAGES_PER_DAY=${{ vars.MAX_OF_MESSAGES_PER_DAY }}" >> .env
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
@@ -113,9 +114,5 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            ${{ github.actor }} создал commit:
-            Commit: ${{ github.event.commits[0].message }}
-
             Репозиторий: ${{ github.repository }}
-
             Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}
