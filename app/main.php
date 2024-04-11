@@ -4,29 +4,26 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use RIB\model\Processing;
 use RIB\model\Schedule;
-use Monolog\Logger;
-use Logtail\Monolog\LogtailHandler;
 
 $periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверки скрипта
 
-$logger = new Logger("RIB-".$_ENV['ENVIRONMENT']); // Инициализация логов
-$logger->pushHandler(new LogtailHandler($_ENV['BETTERSTACK_TOKEN']));
-$logger->info("Запуск бота", [
+sleep(5); // Нужно, для инициализации БД
+
+$log = Logs::getInstance();
+$log->info('Запуск бота', [
     "environment" => $_ENV['ENVIRONMENT'],
     "release" => $_ENV['RELEASE'],
     "pid" => getmypid()
 ]);
 
-sleep(5); // Нужно, для инициализации БД
 $cycleCount = 0; // счетчик цикла
 
 // Бесконечный цикл, который будет вызывать основной файл скрипта
 while (true) {
 
-    // пускай выполняется каждый 30ый цикл
-    if ($cycleCount % 30 === 0) {
+    // пускай выполняется каждый 60 цикл
+    if ($cycleCount % 20 === 0) {
         heartbeat();
-        $cycleCount = 0;
     }
     $cycleCount++;
 

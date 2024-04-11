@@ -6,6 +6,7 @@
     "autoload": {
         "files": [
             "config.php",
+            "lib/logs.php",
             "lib/helper.php"
         ],
         "psr-4": {
