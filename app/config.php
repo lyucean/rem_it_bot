@@ -24,6 +24,8 @@ $dotenv->required('RELEASE_DATE')->notEmpty();
 $_ENV['DIR_BASE'] = __DIR__;
 $_ENV['DIR_FILE'] = __DIR__ . '/file/';
 
+$_ENV['LOG_FILE'] = __DIR__ . '/logs/main.log';
+
 date_default_timezone_set('Europe/Moscow'); // Установка временной зоны на Московское время
 
 // Копим логи ошибок в Sentry

@@ -28,7 +28,21 @@ class Error
 
         if ($throw) {
             $message = '[' . $this->telegram->getUpdateType() . '] ' . $message;
-            new Exception($message);
+            throw new Exception($message);
+        }
+    }
+
+    public function index(): void
+    {
+        if("138984892" == $_ENV['TELEGRAM_ADMIN_CHAT_ID']){
+            $this->telegram->sendMessage(
+                [
+                    'chat_id' => $this->chat_id,
+                    'text' => htmlspecialchars('Релиз ' . $_ENV['RELEASE_DATE']
+                        . PHP_EOL . file_get_contents($_ENV['LOG_FILE']), ENT_QUOTES),
+                    'parse_mode' => 'html'
+                ]
+            );
         }
     }
 }
