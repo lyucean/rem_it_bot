@@ -4,6 +4,7 @@
 namespace RIB\command;
 
 use Exception;
+use Logs;
 use Telegram;
 
 class Test
@@ -30,7 +31,35 @@ class Test
         throw new Exception("My first Sentry error!");
     }
 
-    public function index()
+    public function index(): void
+    {
+        self::textLog();
+    }
+
+    public function textLog(): void
+    {
+        date_default_timezone_set('Europe/Moscow');
+        $timestamp = $_SERVER['REQUEST_TIME'];
+        $start_datetime = date("Y-m-d H:i:s", $timestamp);
+        echo "Скрипт был запущен: " . $start_datetime;
+
+        $this->telegram->sendMessage(
+            [
+                'chat_id' => $this->chat_id,
+                'text' => htmlspecialchars('Релиз ' . $_ENV['RELEASE']
+                    . PHP_EOL . 'Врем запуска ' . $start_datetime, ENT_QUOTES),
+                'parse_mode' => 'html'
+            ]
+        );
+
+        $log = Logs::getInstance();
+        $log->debug('TestLog', [
+            "environment" => $_ENV['ENVIRONMENT'],
+            "release" => $_ENV['RELEASE'],
+            "pid" => getmypid()
+        ]);
+    }
+    public function testMarkdownV2(): void
     {
         $this->telegram->sendMessage(
             [
