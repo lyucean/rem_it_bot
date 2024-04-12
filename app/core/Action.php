@@ -56,6 +56,7 @@ class Action
 
         if (!$reflection->hasMethod($this->method)) {
             (new Error($registry))->send('Не удалось вызвать команду ' . $this->route . '/' . $this->method . '!');
+            return;
         }
 
         call_user_func_array(array($command, $this->method), []);
