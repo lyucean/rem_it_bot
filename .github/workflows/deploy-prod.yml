@@ -38,6 +38,7 @@ jobs:
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
           echo "PERIOD_MESSAGE_CHECKED=${{ vars.PERIOD_MESSAGE_CHECKED }}" >> .env
           echo "BACKUPS_FOLDER=${{ vars.BACKUPS_FOLDER }}" >> .env
+          echo "RELEASE_DATE=$(date +'%Y-%m-%d_%H.%M')" >> .env
 
       - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
@@ -49,8 +50,8 @@ jobs:
           script: |
             mkdir -p ${{ vars.PROJECT_PATH }}
 
-      - name: "Скопируйте .env в папку проекта."
-        run: cp .env ./app
+      - name: "Скопируйте .env в папку проекта с обязательной заменой"
+        run: cp -f .env ./app
 
       - name: "Скопируйте файлы приложения на удаленный сервер."
         uses: appleboy/scp-action@master

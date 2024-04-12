@@ -46,7 +46,7 @@ else
 endif
 
 init: ## Инициализация проекта
-init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate
+init: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate update-release-date
 
 update: ## Пересобрать контейнер, обновить композер и миграции
 update: clean docker-down docker-pull docker-build docker-up composer-install wait-for-mysql migrate
@@ -111,4 +111,9 @@ backup-db:  ## Снимем дамп с БД
 backup-file:  ## Делаем архив данных
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
 	tar -cvzf ${BACKUPS_FOLDER}/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
+
+update-release-date: ## Перезаписать дату релиза
+	@echo "$(PURPLE) Перезапишем дату релиза $(RESET)"
+	@awk -v date="RELEASE_DATE=\"$(shell date '+%Y-%m-%d_%H.%M')\"" '/^RELEASE_DATE/{print date; found=1; next} 1; END {if (!found) print date}' app/.env > app/.env.tmp
+	@mv app/.env.tmp app/.env
 

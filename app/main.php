@@ -12,7 +12,7 @@ sleep(5); // Нужно, для инициализации БД
 $log = Logs::getInstance();
 $log->info('Запуск бота', [
     "environment" => $_ENV['ENVIRONMENT'],
-    "release" => $_ENV['RELEASE'],
+    "release" => $_ENV['RELEASE_DATE'],
     "pid" => getmypid()
 ]);
 

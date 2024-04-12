@@ -46,7 +46,7 @@ class Test
         $this->telegram->sendMessage(
             [
                 'chat_id' => $this->chat_id,
-                'text' => htmlspecialchars('Релиз ' . $_ENV['RELEASE']
+                'text' => htmlspecialchars('Релиз ' . $_ENV['RELEASE_DATE']
                     . PHP_EOL . 'Врем запуска ' . $start_datetime, ENT_QUOTES),
                 'parse_mode' => 'html'
             ]
@@ -55,7 +55,7 @@ class Test
         $log = Logs::getInstance();
         $log->debug('TestLog', [
             "environment" => $_ENV['ENVIRONMENT'],
-            "release" => $_ENV['RELEASE'],
+            "release" => $_ENV['RELEASE_DATE'],
             "pid" => getmypid()
         ]);
     }
