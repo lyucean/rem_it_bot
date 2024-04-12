@@ -38,7 +38,7 @@ jobs:
           echo "MAX_LINE_LENGTH=${{ vars.MAX_LINE_LENGTH }}" >> .env
           echo "PERIOD_MESSAGE_CHECKED=${{ vars.PERIOD_MESSAGE_CHECKED }}" >> .env
           echo "BACKUPS_FOLDER=${{ vars.BACKUPS_FOLDER }}" >> .env
-          echo "RELEASE_DATE=$(date +'%Y-%m-%d_%H.%M')" >> .env
+          echo "RELEASE_DATE=$(TZ='Europe/Moscow' date +'%Y-%m-%d_%H.%M')" >> .env
 
       - name: "Создадим каталог проекта"
         uses: appleboy/ssh-action@master
