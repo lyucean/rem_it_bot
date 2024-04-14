@@ -16,6 +16,7 @@ services:
       - rib_network
 
   composer:
+    restart: no
     container_name: rem_it_bot_composer
     profiles: ["main", "dev"]
     image: composer:2.6.5
@@ -27,10 +28,10 @@ services:
       - rib_network
 
   mysql:
+    restart: unless-stopped
     container_name: rem_it_bot_mysql
     profiles: ["main", "dev"]
     image: mysql:8.2.0
-    restart: unless-stopped
     ports:
       - ${MYSQL_PORT}:3306
     environment:
@@ -45,6 +46,7 @@ services:
 
 
   phpmyadmin:
+    restart: no
     image: phpmyadmin/phpmyadmin
     profiles: ["dev"]
     ports:
