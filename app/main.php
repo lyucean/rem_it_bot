@@ -7,7 +7,7 @@ use RIB\model\Schedule;
 
 $periodChecked = $_ENV['PERIOD_MESSAGE_CHECKED']; // Период проверки скрипта
 
-sleep(5); // Нужно, для инициализации БД
+sleep(60); // Нужно, для инициализации БД
 
 $log = Logs::getInstance();
 $log->info('Запуск бота', [
