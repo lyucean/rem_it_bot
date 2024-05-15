@@ -4,7 +4,7 @@
 # Подключим файл конфигурации
 include app/.env
 
-# И укажем его для docker-compose
+# И укажем его для docker compose
 ENV = --env-file app/.env
 
 # Дата время
@@ -22,7 +22,7 @@ help:
 wait-for-mysql: ## Задержка для MySQL, необходимая для инициализации, работает, только если mysql будет торчать наружу
 	@echo "$(PURPLE)Ожидание инициализации MySQL$(RESET)"
 	@seconds=0; \
-	while ! docker-compose $(ENV) exec -T php-cli nc -z mysql 3306; do \
+	while ! docker compose $(ENV) exec -T php-cli nc -z mysql 3306; do \
 		seconds=$$((seconds+1)); \
 		sleep 1; \
 		echo "Прошло: $$seconds сек."; \
@@ -55,38 +55,38 @@ restart: ## Restart docker containers
 restart: clean docker-down docker-up log
 
 php-bash: ## Подключается к контейнеру PHP
-	docker-compose $(ENV) exec php-cli bash
+	docker compose $(ENV) exec php-cli bash
 
 composer: ## Подключается к контейнеру PHP и работаем с composer
-	docker-compose $(ENV) exec php-cli bash -c "composer -V; bash"
+	docker compose $(ENV) exec php-cli bash -c "composer -V; bash"
 
 migrate: ## Применить миграции
 	@echo "$(PURPLE) Применить миграции $(RESET)"
-	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx migrate --configuration phinx.php
+	docker compose $(ENV) run --rm php-cli php vendor/bin/phinx migrate --configuration phinx.php
 
 rollback: ## Отменить последнюю миграцию
 	@echo "$(PURPLE) Применить миграции $(RESET)"
-	docker-compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
+	docker compose $(ENV) run --rm php-cli php vendor/bin/phinx rollback --configuration phinx.php
 
 composer-install: ## Поставим пакеты композера
 	@echo "$(PURPLE) Поставим пакеты композера $(RESET)"
-	@docker-compose $(ENV) run --rm composer
+	@docker compose $(ENV) run --rm composer
 
 docker-up: ## Поднимем контейнеры
 	@echo "$(PURPLE) Поднимем контейнеры $(RESET)"
-	docker-compose $(ENV) $(PROFILE) up -d
+	docker compose $(ENV) $(PROFILE) up -d
 
 docker-build: ## Соберём образы
 	@echo "$(PURPLE) Соберём образы $(RESET)"
-	docker-compose $(ENV) $(PROFILE) build
+	docker compose $(ENV) $(PROFILE) build
 
 docker-pull: ## Поучим все контейнеры
 	@echo "$(PURPLE) Поучим все контейнеры $(RESET)"
-	docker-compose $(ENV) $(PROFILE) pull --include-deps
+	docker compose $(ENV) $(PROFILE) pull --include-deps
 
 docker-down: ## Остановим контейнеры
 	@echo "$(PURPLE) Остановим контейнеры $(RESET)"
-	docker-compose $(ENV) $(PROFILE) down --remove-orphans
+	docker compose $(ENV) $(PROFILE) down --remove-orphans
 
 clean:  ## Очистим папку логов
 	@echo "$(PURPLE) Очистим папку логов $(RESET)"
@@ -95,18 +95,18 @@ clean:  ## Очистим папку логов
 import-dump:  ## Импорт тестовой БД из дампа для разработки
 	@echo "$(PURPLE) Импорт тестовой БД из дампа для разработки $(RESET)"
 	@if [ -f "app/db/dump/RIB_test.sql" ]; then \
-		docker-compose $(ENV) exec -T mysql sh -c 'exec mysql -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' < "app/db/dump/RIB_test.sql"; \
+		docker compose $(ENV) exec -T mysql sh -c 'exec mysql -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' < "app/db/dump/RIB_test.sql"; \
 	else \
 		echo "Тестовый дампа нет"; \
 	fi
 
 save-dump:  ## Снимем тестовой дамп БД дампа для разработки
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
-	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' > "app/db/dump/RIB_test.sql"
+	docker compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' > "app/db/dump/RIB_test.sql"
 
 backup-db:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
-	docker-compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/RIB_$(BACKUP_DATETIME).sql.gz"
+	docker compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/RIB_$(BACKUP_DATETIME).sql.gz"
 
 backup-file:  ## Делаем архив данных
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
