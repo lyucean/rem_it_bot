@@ -106,11 +106,11 @@ save-dump:  ## Снимем тестовой дамп БД дампа для р�
 
 backup-db:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
-	docker compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/RIB_$(BACKUP_DATETIME).sql.gz"
+	docker compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/$(BACKUP_DATETIME)_RIB.sql.gz"
 
 backup-file:  ## Делаем архив данных
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
-	tar -cvzf ${BACKUPS_FOLDER}/RIB_${BACKUP_DATETIME}.file.gz ./app/file/*
+	tar -cvzf ${BACKUPS_FOLDER}/${BACKUP_DATETIME}_RIB.file.gz ./app/file/*
 
 update-release-date: ## Перезаписать дату релиза
 	@echo "$(PURPLE) Перезапишем дату релиза $(RESET)"
