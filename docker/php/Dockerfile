@@ -1,8 +1,10 @@
 FROM php:8-cli
 
-# Обновляем
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends
+# Обновляем ключи GPG и репозитории
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends gnupg && \
+    apt-key update && \
+    apt-get update -y
 
 WORKDIR /app
 
