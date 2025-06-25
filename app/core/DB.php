@@ -279,7 +279,8 @@ class DB
      */
     public function addMessage($data): void
     {
-        $this->db->insert(
+        // Используем replace вместо insert для предотвращения ошибки дублирования ключа
+        $this->db->replace(
           'message',
           [
             'message_id' => $data['message_id'],

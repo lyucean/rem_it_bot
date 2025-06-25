@@ -42,9 +42,9 @@ services:
     networks:
       - rib_network
     volumes:
-      - rem-mysql-data:/var/lib/mysql # Создаем привязку тома к папке MySQL внутри контейнера
-
-
+      - rem-mysql-data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    command: --max_allowed_packet=256M --wait_timeout=28800
   phpmyadmin:
     restart: no
     image: phpmyadmin/phpmyadmin
