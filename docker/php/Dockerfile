@@ -1,21 +1,16 @@
 FROM php:8-cli
 
-# Обновляем ключи GPG и репозитории
+# Обновляем репозитории и устанавливаем необходимые пакеты
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends gnupg && \
-    apt-key update && \
-    apt-get update -y
+    apt-get install -y --no-install-recommends \
+        netcat-openbsd \
+        zip \
+        unzip \
+        git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
-# нужно для проверки доступа к БД
-RUN apt-get install -y netcat-openbsd
-
-# Установка расширения zip для работы с composer
-RUN apt-get install -y zip unzip
-
-# Установка расширения git для работы с composer
-RUN apt-get install -y git
 
 # Установка расширения PDO_Mysql
 RUN docker-php-ext-install pdo pdo_mysql

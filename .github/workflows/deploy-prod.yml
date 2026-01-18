@@ -1,6 +1,8 @@
 name: Deployment
 
-concurrency: production
+concurrency:
+  group: production
+  cancel-in-progress: false
 
 on:
   push:
@@ -51,7 +53,7 @@ jobs:
             mkdir -p ${{ vars.PROJECT_PATH }}
 
       - name: "Скопируйте .env в папку проекта с обязательной заменой"
-        run: cp -f .env ./app
+        run: cp -f .env ./app/.env
 
       - name: "Скопируйте файлы приложения на удаленный сервер."
         uses: appleboy/scp-action@master
@@ -96,12 +98,17 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            running_containers=$(docker ps --filter "name=rem_it_bot_php" --filter "name=rem_it_bot_mysql" --format "{{.Names}}")
-            if [[ -z $running_containers ]]; then
+            php_container=$(docker ps --filter "name=rem_it_bot_php" --format "{{.Names}}" | head -n1)
+            mysql_container=$(docker ps --filter "name=rem_it_bot_mysql" --format "{{.Names}}" | head -n1)
+            if [[ -z "$php_container" ]] || [[ -z "$mysql_container" ]]; then
               echo "ОШИБКА: Контейнеры не запущены"
+              echo "PHP: $php_container"
+              echo "MySQL: $mysql_container"
               exit 1
             else
               echo "Все контейнеры работают"
+              echo "PHP: $php_container"
+              echo "MySQL: $mysql_container"
             fi
 
   alert:
