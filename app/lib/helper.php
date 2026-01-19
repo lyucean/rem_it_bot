@@ -189,7 +189,6 @@ if (!function_exists('heartbeat')) {
             curl_setopt($ch, CURLOPT_NOBODY, true);
 
             curl_exec($ch);
-            curl_close($ch);
         }
     }
 }
