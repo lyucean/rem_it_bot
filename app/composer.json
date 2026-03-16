@@ -33,5 +33,20 @@
         "sentry/sentry": "^4.6",
         "logtail/monolog-logtail": "^3.1",
       "ext-curl": "*"
+    },
+    "require-dev": {
+        "cweagans/composer-patches": "^1.7"
+    },
+    "extra": {
+        "patches": {
+            "eleirbag89/telegrambotphp": {
+                "PHP 8.5: remove deprecated curl_close()": "patches/eleirbag89-telegrambotphp-remove-curl-close.patch"
+            }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        }
     }
 }
