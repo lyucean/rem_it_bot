@@ -15,6 +15,7 @@ class Model
         $this->telegram = new Telegram(
             $_ENV['TELEGRAM_TOKEN'],
             true,
+            telegram_bot_proxy_config(),
         );
         $this->db = new DB();
     }

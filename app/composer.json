@@ -40,7 +40,8 @@
     "extra": {
         "patches": {
             "eleirbag89/telegrambotphp": {
-                "PHP 8.5: remove deprecated curl_close()": "patches/eleirbag89-telegrambotphp-remove-curl-close.patch"
+                "PHP 8.5: remove deprecated curl_close()": "patches/eleirbag89-telegrambotphp-remove-curl-close.patch",
+                "HTTPS через HTTP-прокси: CURLOPT_HTTPPROXYTUNNEL": "patches/eleirbag89-telegrambotphp-http-proxy-tunnel.patch"
             }
         }
     },

@@ -1,0 +1,15 @@
+--- Telegram.php
++++ Telegram.php
+@@ -1782,6 +1782,12 @@
+                 // 				echo "Proxy port";
+                 curl_setopt($ch, CURLOPT_PROXYPORT, $this->proxy['port']);
+             }
++
++            $proxyType = $this->proxy['type'] ?? CURLPROXY_HTTP;
++            // HTTPS к api.telegram.org через HTTP-прокси (как TELEGRAM_PROXY в abxtest.com)
++            if ($proxyType === CURLPROXY_HTTP) {
++                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, true);
++            }
+         }
+         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+         $result = curl_exec($ch);

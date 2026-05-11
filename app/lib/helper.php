@@ -192,3 +192,34 @@ if (!function_exists('heartbeat')) {
         }
     }
 }
+
+/**
+ * Параметры прокси для eleirbag89/telegrambotphp (getUpdates, sendMessage и т.д.).
+ * TELEGRAM_PROXY - как в abxtest.com (строка host:port или http://...).
+ * TELEGRAM_HTTP_PROXY - как в logtail.ru, если TELEGRAM_PROXY не задан.
+ *
+ * @return array<string, int|string>
+ */
+if (!function_exists('telegram_bot_proxy_config')) {
+    function telegram_bot_proxy_config(): array
+    {
+        $raw = trim($_ENV['TELEGRAM_PROXY'] ?? $_ENV['TELEGRAM_HTTP_PROXY'] ?? '');
+        if ($raw === '') {
+            return [];
+        }
+        if (preg_match('#^socks5h://#i', $raw)) {
+            return [
+                'url' => $raw,
+                'type' => defined('CURLPROXY_SOCKS5_HOSTNAME') ? CURLPROXY_SOCKS5_HOSTNAME : CURLPROXY_SOCKS5,
+            ];
+        }
+        if (preg_match('#^socks5://#i', $raw)) {
+            return ['url' => $raw, 'type' => CURLPROXY_SOCKS5];
+        }
+        if (preg_match('#^socks4a?://#i', $raw)) {
+            return ['url' => $raw, 'type' => CURLPROXY_SOCKS4];
+        }
+
+        return ['url' => $raw, 'type' => CURLPROXY_HTTP];
+    }
+}
