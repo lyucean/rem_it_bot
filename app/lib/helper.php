@@ -223,3 +223,44 @@ if (!function_exists('telegram_bot_proxy_config')) {
         return ['url' => $raw, 'type' => CURLPROXY_HTTP];
     }
 }
+
+/**
+ * GET по URL с тем же прокси, что и eleirbag89/telegrambotphp (см. TELEGRAM_PROXY).
+ * file_get_contents до api.telegram.org не использует прокси и часто падает по таймауту.
+ *
+ * @return string|null тело ответа при HTTP 200, иначе null
+ */
+if (!function_exists('telegram_download_url')) {
+    function telegram_download_url(string $url, int $connectTimeout = 30, int $timeout = 120): ?string
+    {
+        if (!function_exists('curl_init')) {
+            return null;
+        }
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connectTimeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
+
+        $proxy = telegram_bot_proxy_config();
+        if ($proxy !== []) {
+            curl_setopt($ch, CURLOPT_PROXY, $proxy['url']);
+            curl_setopt($ch, CURLOPT_PROXYTYPE, $proxy['type'] ?? CURLPROXY_HTTP);
+            if (($proxy['type'] ?? CURLPROXY_HTTP) === CURLPROXY_HTTP) {
+                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, true);
+            }
+        }
+
+        $body = curl_exec($ch);
+        $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($body === false || $httpCode !== 200) {
+            return null;
+        }
+
+        return $body;
+    }
+}

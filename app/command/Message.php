@@ -95,12 +95,14 @@ class Message
 
         if (!array_key_exists('ok', $file) || !array_key_exists('result', $file)) {
             (new Error($this->telegram))->send('Я не смог скачать картинку, сервер недоступен.');
+            return;
         }
 
         $file_path = $file['result']['file_path'];
         $file_name = $file['result']['file_unique_id'] . '.jpg';
 
-        $url_on_server = 'https://api.telegram.org/file/bot' . $_ENV['TELEGRAM_TOKEN'] . '/' . $file_path;
+        $token = trim((string) ($_ENV['TELEGRAM_TOKEN'] ?? ''));
+        $url_on_server = 'https://api.telegram.org/file/bot' . $token . '/' . $file_path;
 
         $folder = rand(10, 999) . '/';
 
@@ -108,9 +110,15 @@ class Message
             mkdir($_ENV['DIR_FILE'] . $folder);
         }
 
+        $imageBody = telegram_download_url($url_on_server);
+        if ($imageBody === null) {
+            (new Error($this->telegram))->send('Не удалось скачать файл с Telegram (таймаут или сеть). Повторите позже.');
+            return;
+        }
+
         file_put_contents(
             $_ENV['DIR_FILE'] . $folder . $file_name,
-            file_get_contents($url_on_server)
+            $imageBody
         );
 
         $this->message_id = $this->telegram->MessageID();
