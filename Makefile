@@ -106,11 +106,21 @@ save-dump:  ## Снимем тестовой дамп БД дампа для р�
 
 backup-db:  ## Снимем дамп с БД
 	@echo "$(PURPLE) Снимем дамп с БД $(RESET)"
+	@mkdir -p "$(BACKUPS_FOLDER)"
 	docker compose $(ENV) exec mysql sh -c 'exec mysqldump -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}"' | gzip > "${BACKUPS_FOLDER}/$(BACKUP_DATETIME)_RIB.sql.gz"
 
 backup-file:  ## Делаем архив данных
 	@echo "$(PURPLE) Создадим архив файлов $(RESET)"
+	@mkdir -p "$(BACKUPS_FOLDER)"
 	tar -cvzf ${BACKUPS_FOLDER}/${BACKUP_DATETIME}_RIB.file.gz ./app/file/*
+
+backup-prune:  ## Удалить бэкапы rem_it_bot старше 7 дней
+	@echo "$(PURPLE) Удаление бэкапов rem_it_bot старше 7 дней в $(BACKUPS_FOLDER) $(RESET)"
+	@mkdir -p "$(BACKUPS_FOLDER)"
+	@find "$(BACKUPS_FOLDER)" -maxdepth 1 -type f \( -name '*_RIB.sql.gz' -o -name '*_RIB.file.gz' \) -mtime +7 -print -delete
+	@echo "✅ Ротация завершена"
+
+backup: backup-db backup-file backup-prune ## Бэкап БД + файлы + ротация 7 дней
 
 update-release-date: ## Перезаписать дату релиза
 	@echo "$(PURPLE) Перезапишем дату релиза $(RESET)"
