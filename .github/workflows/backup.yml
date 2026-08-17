@@ -6,7 +6,6 @@ on:
   push:
     paths:
       - ".github/workflows/backup.yml"
-      - "Makefile"
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -60,6 +59,17 @@ jobs:
     steps:
       - name: "Подготовка репозитория"
         uses: actions/checkout@v4
+
+      - name: "Sync Makefile"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "Makefile"
+          target: "${{ vars.PROJECT_PATH }}/"
+          overwrite: true
 
       - name: "Удалим бэкапы rem_it_bot старше 7 дней"
         uses: appleboy/ssh-action@v1.2.0
