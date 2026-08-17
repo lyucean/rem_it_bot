@@ -42,7 +42,8 @@
         "patches": {
             "eleirbag89/telegrambotphp": {
                 "PHP 8.5: remove deprecated curl_close()": "patches/eleirbag89-telegrambotphp-remove-curl-close.patch",
-                "HTTPS через HTTP-прокси: CURLOPT_HTTPPROXYTUNNEL": "patches/eleirbag89-telegrambotphp-http-proxy-tunnel.patch"
+                "HTTPS через HTTP-прокси: CURLOPT_HTTPPROXYTUNNEL": "patches/eleirbag89-telegrambotphp-http-proxy-tunnel.patch",
+                "Таймауты cURL, чтобы бот не зависал на getUpdates": "patches/eleirbag89-telegrambotphp-curl-timeouts.patch"
             }
         }
     },

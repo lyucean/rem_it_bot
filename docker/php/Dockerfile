@@ -24,5 +24,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Установка часового пояса Москвы
 RUN ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
-# CMD
-CMD ["sh", "-c", "php /app/main.php >> /app/logs/main.log 2>&1 && tail -f /dev/null"]
+# CMD: перезапуск main.php после падения (зависания ловим таймаутами cURL в патче Telegram.php)
+CMD ["sh", "-c", "while true; do php /app/main.php >> /app/logs/main.log 2>&1; echo \"[$(date -Iseconds)] bot exited, restart in 5s\" >> /app/logs/main.log; sleep 5; done"]

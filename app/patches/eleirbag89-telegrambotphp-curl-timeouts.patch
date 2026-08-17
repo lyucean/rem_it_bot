@@ -1,0 +1,24 @@
+--- Telegram.php
++++ Telegram.php
+@@ -1789,6 +1789,21 @@
+                 curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, true);
+             }
+         }
+         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
++
++        // Без таймаутов curl может зависнуть намертво при сбое прокси или «зависшем» TCP.
++        $connectTimeout = 15;
++        $requestTimeout = 60;
++        if (str_contains($url, 'getUpdates')) {
++            $longPoll = isset($content['timeout']) ? (int) $content['timeout'] : 0;
++            $requestTimeout = $longPoll > 0 ? $longPoll + 20 : 30;
++        } elseif (isset($content['photo']) || isset($content['document']) || isset($content['video'])) {
++            $requestTimeout = 120;
++        }
++        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connectTimeout);
++        curl_setopt($ch, CURLOPT_TIMEOUT, $requestTimeout);
++        curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
++
+         $result = curl_exec($ch);
+         if ($result === false) {
+             $result = json_encode(
